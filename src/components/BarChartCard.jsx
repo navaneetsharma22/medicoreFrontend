@@ -11,7 +11,7 @@ export default function BarChartCard({ data }) {
       className="glass-card p-6 shadow-[0_8px_32px_rgba(47,158,143,0.08)]"
     >
       <div className="flex justify-between items-center mb-6">
-        <h3 className="text-xl font-bold text-slate-800 tracking-tight">Department Performance</h3>
+        <h3 className="text-xl font-bold text-text-primary tracking-tight">Department Performance</h3>
       </div>
       
       <div className="h-72 w-full">
@@ -21,9 +21,9 @@ export default function BarChartCard({ data }) {
             <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 12 }} dy={10} />
             <YAxis axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 12 }} />
             <Tooltip 
-              cursor={{ fill: 'rgba(47,158,143,0.05)' }}
+              cursor={{ fill: 'var(--border-subtle)' }}
               contentStyle={{ 
-                backgroundColor: 'rgba(255,255,255,0.8)', 
+                backgroundColor: 'var(--card)', 
                 backdropFilter: 'blur(10px)',
                 borderRadius: '16px',
                 border: '1px solid rgba(255,255,255,0.5)',

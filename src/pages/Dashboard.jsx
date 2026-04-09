@@ -30,8 +30,8 @@ export default function Dashboard() {
       
       <div className="flex justify-between items-end mb-8 animate-fade-in flex-shrink-0">
         <div>
-          <h2 className="text-3xl font-bold text-slate-800 tracking-tight">Overview</h2>
-          <p className="text-slate-500 mt-1 font-medium">Welcome back, Dr. Sarah. Here's your clinic today.</p>
+          <h2 className="text-3xl font-bold text-text-primary tracking-tight">Overview</h2>
+          <p className="text-text-secondary mt-1 font-medium">Welcome back, Dr. Sarah. Here's your clinic today.</p>
         </div>
         <button 
           onClick={handleNewAppointment}

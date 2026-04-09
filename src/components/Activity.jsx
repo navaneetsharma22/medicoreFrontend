@@ -11,12 +11,12 @@ export default function Activity({ data: activities }) {
       className="glass-card p-6"
     >
       <div className="flex justify-between items-center mb-5">
-        <h3 className="font-bold text-slate-800 tracking-tight">Recent Activity</h3>
+        <h3 className="font-bold text-text-primary tracking-tight">Recent Activity</h3>
       </div>
 
       <div className="relative">
         {/* Timeline line */}
-        <div className="absolute left-4 top-2 bottom-2 w-px bg-white/50"></div>
+        <div className="absolute left-4 top-2 bottom-2 w-px bg-[var(--border-subtle)]"></div>
         
         <div className="space-y-6">
           {activities.map((item) => {
@@ -27,7 +27,7 @@ export default function Activity({ data: activities }) {
             
             return (
               <div key={item.id} className="relative pl-10">
-                <div className="absolute left-2 top-0.5 w-4 h-4 rounded-full border-2 border-white bg-medicore-bg flex items-center justify-center translate-x-[-2px]">
+                <div className="absolute left-2 top-0.5 w-4 h-4 rounded-full border-2 border-[var(--border-subtle)] bg-[var(--surface)] flex items-center justify-center translate-x-[-2px]">
                   <div className={`w-1.5 h-1.5 rounded-full ${
                     item.type === 'alert' ? 'bg-amber-400' :
                     item.type === 'success' ? 'bg-emerald-400' : 'bg-blue-400'
@@ -36,10 +36,10 @@ export default function Activity({ data: activities }) {
                 
                 <div className="flex justify-between items-start">
                   <div>
-                    <h4 className="text-sm font-semibold text-slate-800">{item.title}</h4>
-                    <p className="text-xs text-slate-500 mt-0.5">for {item.target}</p>
+                    <h4 className="text-sm font-semibold text-text-primary">{item.title}</h4>
+                    <p className="text-xs text-text-secondary mt-0.5">for {item.target}</p>
                   </div>
-                  <span className="text-xs font-medium text-slate-400">{item.time}</span>
+                  <span className="text-xs font-medium text-text-secondary/70">{item.time}</span>
                 </div>
               </div>
             );

@@ -11,8 +11,8 @@ export default function ChartCard({ data }) {
       className="glass-card p-6 col-span-1 lg:col-span-2 shadow-[0_8px_32px_rgba(47,158,143,0.08)]"
     >
       <div className="flex justify-between items-center mb-6">
-        <h3 className="text-xl font-bold text-slate-800 tracking-tight">Revenue Trends</h3>
-        <select className="bg-white/50 border border-white/40 text-sm font-medium text-slate-600 rounded-xl px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-medicore-primary/50">
+        <h3 className="text-xl font-bold text-text-primary tracking-tight">Revenue Trends</h3>
+        <select className="bg-[var(--card)] border border-[var(--border-subtle)] text-sm font-medium text-text-secondary rounded-xl px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-medicore-primary/50">
           <option>This Week</option>
           <option>This Month</option>
           <option>This Year</option>
@@ -27,7 +27,8 @@ export default function ChartCard({ data }) {
             <YAxis axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 12 }} />
             <Tooltip 
               contentStyle={{ 
-                backgroundColor: 'rgba(255,255,255,0.8)', 
+                backgroundColor: 'var(--card)', 
+
                 backdropFilter: 'blur(10px)',
                 borderRadius: '16px',
                 border: '1px solid rgba(255,255,255,0.5)',

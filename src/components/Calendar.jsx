@@ -20,12 +20,12 @@ export default function Calendar() {
       className="glass-card p-6 mb-6"
     >
       <div className="flex justify-between items-center mb-6">
-        <h3 className="font-bold text-slate-800 tracking-tight">{currentMonth}</h3>
+        <h3 className="font-bold text-text-primary tracking-tight">{currentMonth}</h3>
         <div className="flex gap-2">
-          <button onClick={handlePrevMonth} className="p-1.5 rounded-lg hover:bg-white/50 text-slate-600 transition-colors">
+          <button onClick={handlePrevMonth} className="p-1.5 rounded-lg hover:bg-[var(--border-subtle)] text-text-secondary transition-colors">
             <ChevronLeft className="w-5 h-5" />
           </button>
-          <button onClick={handleNextMonth} className="p-1.5 rounded-lg hover:bg-white/50 text-slate-600 transition-colors">
+          <button onClick={handleNextMonth} className="p-1.5 rounded-lg hover:bg-[var(--border-subtle)] text-text-secondary transition-colors">
             <ChevronRight className="w-5 h-5" />
           </button>
         </div>
@@ -33,7 +33,7 @@ export default function Calendar() {
 
       <div className="grid grid-cols-7 gap-y-4 mb-2 text-center">
         {days.map(day => (
-          <div key={day} className="text-xs font-semibold text-slate-400">
+          <div key={day} className="text-xs font-semibold text-text-secondary/70">
             {day}
           </div>
         ))}
@@ -54,7 +54,7 @@ export default function Calendar() {
                 className={`w-8 h-8 mx-auto flex flex-col items-center justify-center rounded-full text-sm font-medium transition-all
                   ${isActive 
                     ? 'bg-medicore-primary text-white shadow-[0_0_15px_rgba(47,158,143,0.4)]' 
-                    : 'text-slate-600 hover:bg-white/60 hover:scale-110'}
+                    : 'text-text-secondary hover:bg-[var(--border-subtle)] hover:scale-110'}
                 `}
               >
                 {date}

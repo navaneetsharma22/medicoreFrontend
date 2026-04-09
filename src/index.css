@@ -2,11 +2,20 @@
 
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --color-medicore-primary: #2F9E8F;
+  --color-medicore-primary-hover: rgba(47,158,143,0.2);
   --color-medicore-light: #3DB6A3;
   --color-medicore-dark: #1F7A6B;
-  --color-medicore-bg: #EAF3F1;
+  
+  --color-medicore-bg: var(--bg);
+  --color-medicore-surface: var(--surface);
+  --color-medicore-card: var(--card);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-border-subtle: var(--border-subtle);
 
   --animate-fade-in: fadeIn 0.5s ease-out forwards;
   --animate-slide-up: slideUp 0.5s ease-out forwards;
@@ -27,28 +36,61 @@
 }
 
 @layer base {
-  html {
-    font-size: 80%; /* Zoom out the whole content of the web page */
+  :root {
+    --bg: #EAF3F1;
+    --surface: #F5F9F8;
+    --card: rgba(255, 255, 255, 0.6);
+    --text-primary: #1e293b;
+    --text-secondary: #475569;
+    --border-subtle: rgba(255, 255, 255, 0.5);
+    font-size: 80%;
   }
+
+  .dark {
+    --bg: #0F1E1B;
+    --surface: #132724;
+    --card: rgba(26, 52, 48, 0.7);
+    --text-primary: #E6F4F1;
+    --text-secondary: #A0CFC6;
+    --border-subtle: rgba(255, 255, 255, 0.08);
+  }
+
   body {
-    @apply bg-medicore-bg font-sans text-slate-800 antialiased overflow-x-hidden;
+    @apply bg-medicore-bg text-text-primary font-sans antialiased overflow-x-hidden transition-colors duration-500 relative;
     font-family: 'Inter', sans-serif;
-    /* Soft moving gradient background animation */
-    background: linear-gradient(-45deg, #EAF3F1, #e0f2f1, #dcf0ec, #EAF3F1);
+  }
+
+  /* Animated background gradient based on bg variable. */
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: -1;
+    background: linear-gradient(-45deg, var(--bg), var(--surface), var(--bg), var(--surface));
     background-size: 400% 400%;
     animation: gradientBG 15s ease infinite;
+    opacity: 0.8;
   }
 }
 
 @layer components {
   .glass-card {
-    @apply bg-white/60 backdrop-blur-xl border border-white/30 rounded-[20px] transition-all duration-300;
+    @apply bg-medicore-card backdrop-blur-xl border border-border-subtle rounded-[20px] transition-all duration-300;
     box-shadow: 0 8px 32px rgba(47,158,143,0.05);
   }
   
+  .dark .glass-card {
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+  }
+
   .glass-card:hover {
-    @apply border-white/50;
+    @apply border-[#3DB6A3]/50;
     box-shadow: 0 8px 32px rgba(47,158,143,0.15);
+  }
+  
+  .dark .glass-card:hover {
+    box-shadow: 0 0 25px rgba(47,158,143,0.35);
+    border: 1px solid rgba(47,158,143,0.4);
   }
 
   /* Thin elegant gradient border on hover */
@@ -70,9 +112,35 @@
     opacity: 1;
   }
   .hover-gradient-border > div {
-    background: rgba(255, 255, 255, 0.7);
+    background: var(--card);
     backdrop-filter: blur(16px);
     border-radius: 20px;
+  }
+  
+  /* Spotlight effect */
+  .spotlight {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .dark .spotlight::after {
+    content: '';
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(47, 158, 143, 0.15) 0%, transparent 70%);
+    border-radius: 50%;
+    left: var(--x, 50%);
+    top: var(--y, 50%);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  .dark .spotlight:hover::after {
+    opacity: 1;
   }
 }
 

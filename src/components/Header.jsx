@@ -1,7 +1,25 @@
-import React from 'react';
-import { Search, Bell } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Search, Bell, Sun, Moon } from 'lucide-react';
 
 export default function Header() {
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    setIsDark(document.documentElement.classList.contains('dark'));
+  }, []);
+
+  const toggleTheme = () => {
+    if (document.documentElement.classList.contains('dark')) {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+      setIsDark(false);
+    } else {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+      setIsDark(true);
+    }
+  };
+
   return (
     <header className="flex justify-between items-center mb-8 animate-slide-up">
       <div className="relative w-full max-w-md">
@@ -11,14 +29,22 @@ export default function Header() {
         <input
           type="text"
           placeholder="Search patients, appointments..."
-          className="w-full glass-card pl-12 pr-4 py-3 outline-none focus:border-medicore-primary/50 focus:shadow-[0_0_20px_rgba(47,158,143,0.15)] text-slate-700 placeholder:text-slate-400 bg-white/50"
+          className="w-full glass-card pl-12 pr-4 py-3 outline-none focus:border-medicore-primary/50 focus:shadow-[0_0_20px_rgba(47,158,143,0.15)] text-text-primary placeholder:text-text-secondary bg-[var(--card)]"
         />
       </div>
 
       <div className="flex items-center gap-6">
-        <button className="relative p-2 rounded-full glass-card hover:bg-white/70 text-slate-600 hover:text-medicore-primary transition-colors">
-          <Bell className="w-6 h-6" />
-          <span className="absolute top-1.5 right-2 w-2.5 h-2.5 bg-red-400 border-2 border-white rounded-full"></span>
+        <button 
+          onClick={toggleTheme}
+          className="p-2 rounded-full glass-card text-text-secondary hover:text-medicore-primary transition-colors flex items-center justify-center w-10 h-10"
+          title="Toggle Dark Mode"
+        >
+          {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+        </button>
+
+        <button className="relative p-2 rounded-full glass-card text-text-secondary hover:text-medicore-primary transition-colors flex items-center justify-center w-10 h-10">
+          <Bell className="w-5 h-5" />
+          <span className="absolute top-2 right-2.5 w-2 h-2 bg-red-400 rounded-full"></span>
         </button>
         
         <div className="flex items-center gap-3 cursor-pointer group glass-card p-1.5 pr-4">
@@ -28,8 +54,8 @@ export default function Header() {
             className="w-10 h-10 rounded-full object-cover shadow-sm border border-white/50 group-hover:border-medicore-primary/50 transition-colors"
           />
           <div className="hidden md:block">
-            <p className="text-sm font-bold text-slate-800">Dr. Sarah L.</p>
-            <p className="text-xs text-slate-500 font-medium">Head Physician</p>
+            <p className="text-sm font-bold text-text-primary">Dr. Sarah L.</p>
+            <p className="text-xs text-text-secondary font-medium">Head Physician</p>
           </div>
         </div>
       </div>
