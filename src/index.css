@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+  --color-medicore-primary: #2F9E8F;
+  --color-medicore-light: #3DB6A3;
+  --color-medicore-dark: #1F7A6B;
+  --color-medicore-bg: #EAF3F1;
+
+  --animate-fade-in: fadeIn 0.5s ease-out forwards;
+  --animate-slide-up: slideUp 0.5s ease-out forwards;
+  --animate-float: float 6s ease-in-out infinite;
+
+  @keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  @keyframes slideUp {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+}
+
+@layer base {
+  html {
+    font-size: 80%; /* Zoom out the whole content of the web page */
+  }
+  body {
+    @apply bg-medicore-bg font-sans text-slate-800 antialiased overflow-x-hidden;
+    font-family: 'Inter', sans-serif;
+    /* Soft moving gradient background animation */
+    background: linear-gradient(-45deg, #EAF3F1, #e0f2f1, #dcf0ec, #EAF3F1);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-white/60 backdrop-blur-xl border border-white/30 rounded-[20px] transition-all duration-300;
+    box-shadow: 0 8px 32px rgba(47,158,143,0.05);
+  }
+  
+  .glass-card:hover {
+    @apply border-white/50;
+    box-shadow: 0 8px 32px rgba(47,158,143,0.15);
+  }
+
+  /* Thin elegant gradient border on hover */
+  .hover-gradient-border {
+    position: relative;
+    z-index: 1;
+  }
+  .hover-gradient-border::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, rgba(61, 182, 163, 0.8), rgba(31, 122, 107, 0.8));
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .hover-gradient-border:hover::before {
+    opacity: 1;
+  }
+  .hover-gradient-border > div {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(16px);
+    border-radius: 20px;
+  }
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
