@@ -9,10 +9,13 @@ export default defineConfig({
 
     rollupOptions: {
       output: {
-        manualChunks: {
-          reactVendor: ['react', 'react-dom'],
-          uiVendor: ['framer-motion'], // animation lib
-          chartVendor: ['recharts'] // if you use charts
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            if (id.includes('react') || id.includes('react-dom')) return 'reactVendor';
+            if (id.includes('framer-motion')) return 'uiVendor';
+            if (id.includes('recharts')) return 'chartVendor';
+            return 'vendor';
+          }
         }
       }
     }

@@ -5,7 +5,7 @@ import { Home, Users, Calendar, Activity, Settings, TrendingUp, Heart } from 'lu
 import ProCard from './ProCard';
 
 const navItems = [
-  { id: 'dashboard', path: '/', label: 'Dashboard', icon: Home },
+  { id: 'dashboard', path: '/dashboard', label: 'Dashboard', icon: Home },
   { id: 'patients', path: '/patients', label: 'Patients', icon: Users },
   { id: 'schedule', path: '/schedule', label: 'Schedule', icon: Calendar },
   { id: 'analytics', path: '/analytics', label: 'Analytics', icon: TrendingUp },
