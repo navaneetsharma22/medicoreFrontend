@@ -42,7 +42,7 @@ function App() {
         {/* Protected / Dashboard Routes */}
         <Route element={<DashboardLayout />}>
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/patients" element={<Patients />} />
+          <Route path="/patients/:id?" element={<Patients />} />
           <Route path="/schedule" element={<PlaceholderPage title="Schedule" />} />
           <Route path="/analytics" element={<PlaceholderPage title="Analytics" />} />
           <Route path="/activity" element={<PlaceholderPage title="Activity" />} />

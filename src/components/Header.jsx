@@ -2,10 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { Search, Bell, Sun, Moon } from 'lucide-react';
 
 export default function Header() {
-  const [isDark, setIsDark] = useState(false);
+  const [isDark, setIsDark] = useState(() => document.documentElement.classList.contains('dark'));
 
   useEffect(() => {
-    setIsDark(document.documentElement.classList.contains('dark'));
+    // Synchronize state if class changes externally
+    const observer = new MutationObserver(() => {
+      setIsDark(document.documentElement.classList.contains('dark'));
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    return () => observer.disconnect();
   }, []);
 
   const toggleTheme = () => {

@@ -4,6 +4,15 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
 
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:5001',
+        changeOrigin: true,
+      }
+    }
+  },
+
   build: {
     chunkSizeWarningLimit: 1000, // increase warning limit (1MB)
 

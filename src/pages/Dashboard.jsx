@@ -12,12 +12,19 @@ import { fetchDashboardData } from '../services/api';
 export default function Dashboard() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetchDashboardData().then((res) => {
-      setData(res);
-      setLoading(false);
-    });
+    fetchDashboardData()
+      .then((res) => {
+        setData(res);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error('Dashboard fetch error:', err);
+        setError(err.message);
+        setLoading(false);
+      });
   }, []);
 
   const handleNewAppointment = () => {
@@ -31,7 +38,7 @@ export default function Dashboard() {
       <div className="flex justify-between items-end mb-8 animate-fade-in flex-shrink-0">
         <div>
           <h2 className="text-3xl font-bold text-text-primary tracking-tight">Overview</h2>
-          <p className="text-text-secondary mt-1 font-medium">Welcome back, Dr. Sarah. Here's your clinic today.</p>
+          <p className="text-text-secondary mt-1 font-medium">Here's your clinic today.</p>
         </div>
         <button 
           onClick={handleNewAppointment}
@@ -45,6 +52,10 @@ export default function Dashboard() {
       {loading ? (
         <div className="flex-1 flex items-center justify-center">
           <div className="w-10 h-10 border-4 border-medicore-primary border-t-transparent rounded-full animate-spin"></div>
+        </div>
+      ) : error ? (
+        <div className="flex-1 flex items-center justify-center text-text-secondary">
+          <p>Failed to load dashboard data. Make sure the backend is running.</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 xl:grid-cols-12 gap-8 pb-10">
