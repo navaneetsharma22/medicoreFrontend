@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Lock, User, Activity, Moon, Sun, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
 
 const Auth = () => {
+
   const [isLogin, setIsLogin] = useState(true);
   const [isDark, setIsDark] = useState(false);
   const navigate = useNavigate();
@@ -30,8 +32,10 @@ const Auth = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Simulate login and redirect to dashboard
+    toast.success(isLogin ? 'Welcome back, Doctor!' : 'Account created successfully!');
     navigate('/dashboard');
   };
+
 
   return (
     <div className="min-h-screen relative flex items-center justify-center p-4 bg-medicore-bg overflow-hidden transition-colors duration-500">

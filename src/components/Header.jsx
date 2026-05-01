@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Bell, Sun, Moon } from 'lucide-react';
+import { Search, Bell, Sun, Moon, Menu } from 'lucide-react';
+import { useUI } from '../context/UIContext';
 
 export default function Header() {
+  const { toggleSidebar } = useUI();
   const [isDark, setIsDark] = useState(() => document.documentElement.classList.contains('dark'));
+
 
   useEffect(() => {
     // Synchronize state if class changes externally
@@ -26,8 +29,16 @@ export default function Header() {
   };
 
   return (
-    <header className="flex justify-between items-center mb-8 animate-slide-up">
-      <div className="relative w-full max-w-md">
+    <header className="flex justify-between items-center mb-8 animate-slide-up gap-4">
+      <button 
+        onClick={toggleSidebar}
+        className="lg:hidden p-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-text-primary transition-all flex-shrink-0"
+      >
+        <Menu className="w-6 h-6" />
+      </button>
+
+      <div className="relative w-full max-w-md hidden sm:block">
+
         <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
           <Search className="h-5 w-5 text-medicore-primary" />
         </div>

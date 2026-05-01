@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { Users, Calendar as CalendarIcon, Activity, Plus } from 'lucide-react';
 import Header from '../components/Header';
 import StatCard from '../components/StatCard';
@@ -8,28 +9,38 @@ import CalendarWidget from '../components/Calendar';
 import Upcoming from '../components/Upcoming';
 import ActivityFeed from '../components/Activity';
 import { fetchDashboardData } from '../services/api';
+import { SkeletonWrapper, StatCardSkeleton, ChartSkeleton, ListSkeleton } from '../components/SkeletonLoader';
 
 export default function Dashboard() {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    fetchDashboardData()
-      .then((res) => {
-        setData(res);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error('Dashboard fetch error:', err);
-        setError(err.message);
-        setLoading(false);
-      });
-  }, []);
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['dashboard'],
+    queryFn: fetchDashboardData
+  });
 
   const handleNewAppointment = () => {
     alert("Opening 'New Appointment' Modal...");
   };
+
+  const LoadingState = () => (
+    <SkeletonWrapper>
+      <div className="grid grid-cols-1 xl:grid-cols-12 gap-8 pb-10">
+        <div className="xl:col-span-8 space-y-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <StatCardSkeleton />
+            <StatCardSkeleton />
+            <StatCardSkeleton />
+          </div>
+          <ChartSkeleton />
+          <ChartSkeleton />
+        </div>
+        <div className="xl:col-span-4 flex flex-col gap-8">
+          <div className="glass-card rounded-3xl p-6 h-[300px]"><SkeletonWrapper><ChartSkeleton /></SkeletonWrapper></div>
+          <ListSkeleton count={3} />
+          <ListSkeleton count={4} />
+        </div>
+      </div>
+    </SkeletonWrapper>
+  );
 
   return (
     <div className="max-w-[1400px] mx-auto h-full flex flex-col">
@@ -49,20 +60,23 @@ export default function Dashboard() {
         </button>
       </div>
 
-      {loading ? (
-        <div className="flex-1 flex items-center justify-center">
-          <div className="w-10 h-10 border-4 border-medicore-primary border-t-transparent rounded-full animate-spin"></div>
-        </div>
+      {isLoading ? (
+        <LoadingState />
       ) : error ? (
-        <div className="flex-1 flex items-center justify-center text-text-secondary">
-          <p>Failed to load dashboard data. Make sure the backend is running.</p>
+        <div className="flex-1 flex flex-col items-center justify-center text-text-secondary py-20 glass-card rounded-3xl">
+          <Activity className="w-16 h-16 mb-4 opacity-20" />
+          <p className="text-xl font-bold text-white mb-2">Oops! Something went wrong</p>
+          <p className="max-w-md text-center">{error.message || 'Failed to load dashboard data. Please try again later.'}</p>
+          <button 
+            onClick={() => window.location.reload()}
+            className="mt-6 px-6 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-white transition-all"
+          >
+            Retry Connection
+          </button>
         </div>
       ) : (
         <div className="grid grid-cols-1 xl:grid-cols-12 gap-8 pb-10">
-          {/* Left Main Section (Stats + Charts) */}
           <div className="xl:col-span-8 space-y-8">
-            
-            {/* Stats Row */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <StatCard 
                 title="Total Patients" 
@@ -90,15 +104,12 @@ export default function Dashboard() {
               />
             </div>
 
-            {/* Charts */}
             <div className="grid grid-cols-1 gap-8">
               <ChartCard data={data.charts.revenue} />
               <BarChartCard data={data.charts.departments} />
             </div>
-
           </div>
 
-          {/* Right Panel */}
           <div className="xl:col-span-4 flex flex-col gap-8">
             <CalendarWidget />
             <Upcoming data={data.schedule} />
@@ -109,3 +120,4 @@ export default function Dashboard() {
     </div>
   );
 }
+

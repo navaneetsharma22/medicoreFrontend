@@ -11,45 +11,65 @@ import {
   Search, Scale, Ruler, Fingerprint
 } from 'lucide-react';
 import Header from '../components/Header';
-import { fetchPatientById, createPatient, fetchDoctors } from '../services/api';
+import { fetchPatientById, createPatient, fetchDoctors, uploadMedicalRecord } from '../services/api';
+import { toast } from 'react-hot-toast';
+import { SkeletonWrapper, ListSkeleton, StatCardSkeleton } from '../components/SkeletonLoader';
+
+import { useForm } from 'react-hook-form';
+
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+
+// Form Validation Schema
+const patientSchema = z.object({
+  name: z.string().min(2, 'Name must be at least 2 characters'),
+  age: z.coerce.number().min(0, 'Age cannot be negative').max(120, 'Age must be valid'),
+  gender: z.enum(['Male', 'Female', 'Other'], {
+    errorMap: () => ({ message: 'Please select a gender' })
+  }),
+  contact: z.string().min(10, 'Contact must be at least 10 digits'),
+  email: z.string().email('Invalid email address').optional().or(z.literal('')),
+});
 
 /* ─── Add Patient Modal ─── */
 function AddPatientModal({ onClose }) {
   const queryClient = useQueryClient();
-  const [form, setForm] = useState({
-    name: '', email: '', phone: '', address: '',
-    idProof: '', height: '', weight: '', appointmentReason: '',
-    avatar: '', doctorId: ''
-  });
   const [submitted, setSubmitted] = useState(false);
 
-  // Fetch doctors using useQuery
-  const { data: doctors = [] } = useQuery({
-    queryKey: ['doctors'],
-    queryFn: fetchDoctors
+  const { 
+    register, 
+    handleSubmit, 
+    formState: { errors },
+    reset
+  } = useForm({
+    resolver: zodResolver(patientSchema),
+    defaultValues: {
+      name: '',
+      age: '',
+      gender: '',
+      contact: '',
+      email: ''
+    }
   });
 
   // Mutation for adding a patient
   const addPatientMutation = useMutation({
     mutationFn: createPatient,
-    onSuccess: (newPatient) => {
+    onSuccess: () => {
       setSubmitted(true);
-      // Invalidate the patients query to refresh data if there was a list
+      toast.success('Patient registered successfully!');
       queryClient.invalidateQueries({ queryKey: ['patients'] });
       setTimeout(() => {
         onClose();
       }, 1500);
     },
-    onError: () => {
-      alert('Failed to add patient');
+    onError: (error) => {
+      toast.error(error.message || 'Failed to add patient');
     }
   });
 
-  const handleChange = (e) => setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    addPatientMutation.mutate(form);
+  const onSubmit = (data) => {
+    addPatientMutation.mutate(data);
   };
 
   return (
@@ -60,7 +80,7 @@ function AddPatientModal({ onClose }) {
     >
       <motion.div 
         initial={{ scale: 0.9, opacity: 0, y: 20 }} animate={{ scale: 1, opacity: 1, y: 0 }} exit={{ scale: 0.9, opacity: 0, y: 20 }}
-        className="glass-card rounded-2xl p-6 w-full max-w-2xl relative max-h-[90vh] overflow-y-auto custom-scrollbar"
+        className="glass-card rounded-2xl p-6 w-full max-w-lg relative"
         onClick={(e) => e.stopPropagation()}
       >
         <button onClick={onClose} className="absolute top-4 right-4 p-1.5 hover:bg-white/10 rounded-lg transition">
@@ -76,108 +96,107 @@ function AddPatientModal({ onClose }) {
               <CheckCircle className="w-8 h-8 text-medicore-primary" />
             </div>
             <h3 className="text-lg font-bold text-white">Patient Added!</h3>
-            <p className="text-text-secondary text-sm mt-1">Successfully registered {form.name}</p>
+            <p className="text-text-secondary text-sm mt-1">The records have been updated.</p>
           </motion.div>
         ) : (
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+            {/* Name Field */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-text-primary">Full Name</label>
+              <div className="relative">
+                <User className={`absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 transition-colors ${errors.name ? 'text-red-400' : 'text-text-secondary'}`} />
+                <input 
+                  {...register('name')}
+                  type="text" 
+                  placeholder="John Doe"
+                  className={`w-full pl-10 pr-4 py-2.5 bg-white/5 border rounded-xl text-text-primary placeholder:text-text-secondary outline-none transition-all ${
+                    errors.name ? 'border-red-400/50 focus:border-red-400' : 'border-white/10 focus:border-medicore-primary/50'
+                  }`}
+                />
+              </div>
+              {errors.name && <p className="text-xs text-red-400 font-medium pl-1">{errors.name.message}</p>}
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Age Field */}
               <div className="space-y-2">
-                <label className="text-sm font-medium text-text-primary">Full Name</label>
-                <div className="relative">
-                  <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-secondary" />
-                  <input type="text" name="name" value={form.name} onChange={handleChange} required placeholder="John Doe"
-                    className="w-full pl-10 pr-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-text-primary placeholder:text-text-secondary outline-none focus:border-medicore-primary/50 transition-all" />
-                </div>
+                <label className="text-sm font-medium text-text-primary">Age</label>
+                <input 
+                  {...register('age')}
+                  type="number" 
+                  placeholder="25"
+                  className={`w-full px-4 py-2.5 bg-white/5 border rounded-xl text-text-primary placeholder:text-text-secondary outline-none transition-all ${
+                    errors.age ? 'border-red-400/50 focus:border-red-400' : 'border-white/10 focus:border-medicore-primary/50'
+                  }`}
+                />
+                {errors.age && <p className="text-xs text-red-400 font-medium pl-1">{errors.age.message}</p>}
               </div>
+
+              {/* Gender Field */}
               <div className="space-y-2">
-                <label className="text-sm font-medium text-text-primary">Gmail Address</label>
+                <label className="text-sm font-medium text-text-primary">Gender</label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-secondary" />
-                  <input type="email" name="email" value={form.email} onChange={handleChange} required placeholder="john@gmail.com"
-                    className="w-full pl-10 pr-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-text-primary placeholder:text-text-secondary outline-none focus:border-medicore-primary/50 transition-all" />
+                  <select 
+                    {...register('gender')}
+                    className={`w-full px-4 py-2.5 bg-white/5 border rounded-xl text-text-primary outline-none transition-all appearance-none cursor-pointer ${
+                      errors.gender ? 'border-red-400/50 focus:border-red-400' : 'border-white/10 focus:border-medicore-primary/50'
+                    }`}
+                  >
+                    <option value="" className="bg-[#1e293b]">Select Gender</option>
+                    <option value="Male" className="bg-[#1e293b]">Male</option>
+                    <option value="Female" className="bg-[#1e293b]">Female</option>
+                    <option value="Other" className="bg-[#1e293b]">Other</option>
+                  </select>
+                  <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-secondary pointer-events-none" />
                 </div>
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-text-primary">Phone Number</label>
-                <div className="relative">
-                  <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-secondary" />
-                  <input type="tel" name="phone" value={form.phone} onChange={handleChange} required placeholder="+1 (555) 000-0000"
-                    className="w-full pl-10 pr-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-text-primary placeholder:text-text-secondary outline-none focus:border-medicore-primary/50 transition-all" />
-                </div>
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-text-primary">ID Proof (Passport/License)</label>
-                <div className="relative">
-                  <Fingerprint className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-secondary" />
-                  <input type="text" name="idProof" value={form.idProof} onChange={handleChange} required placeholder="ID Number"
-                    className="w-full pl-10 pr-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-text-primary placeholder:text-text-secondary outline-none focus:border-medicore-primary/50 transition-all" />
-                </div>
+                {errors.gender && <p className="text-xs text-red-400 font-medium pl-1">{errors.gender.message}</p>}
               </div>
             </div>
 
+            {/* Contact Field */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-text-primary">Residential Address</label>
+              <label className="text-sm font-medium text-text-primary">Contact Number</label>
               <div className="relative">
-                <MapPin className="absolute left-3 top-3 w-4 h-4 text-text-secondary" />
-                <textarea name="address" value={form.address} onChange={handleChange} required placeholder="Full address..." rows={2}
-                  className="w-full pl-10 pr-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-text-primary placeholder:text-text-secondary outline-none focus:border-medicore-primary/50 transition-all resize-none" />
+                <Phone className={`absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 transition-colors ${errors.contact ? 'text-red-400' : 'text-text-secondary'}`} />
+                <input 
+                  {...register('contact')}
+                  type="tel" 
+                  placeholder="+1 (555) 000-0000"
+                  className={`w-full pl-10 pr-4 py-2.5 bg-white/5 border rounded-xl text-text-primary placeholder:text-text-secondary outline-none transition-all ${
+                    errors.contact ? 'border-red-400/50 focus:border-red-400' : 'border-white/10 focus:border-medicore-primary/50'
+                  }`}
+                />
               </div>
+              {errors.contact && <p className="text-xs text-red-400 font-medium pl-1">{errors.contact.message}</p>}
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-text-primary">Height</label>
-                <div className="relative">
-                  <Ruler className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-secondary" />
-                  <input type="text" name="height" value={form.height} onChange={handleChange} placeholder="e.g. 175cm"
-                    className="w-full pl-10 pr-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-text-primary placeholder:text-text-secondary outline-none focus:border-medicore-primary/50 transition-all" />
-                </div>
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-text-primary">Weight</label>
-                <div className="relative">
-                  <Scale className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-secondary" />
-                  <input type="text" name="weight" value={form.weight} onChange={handleChange} placeholder="e.g. 70kg"
-                    className="w-full pl-10 pr-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-text-primary placeholder:text-text-secondary outline-none focus:border-medicore-primary/50 transition-all" />
-                </div>
-              </div>
-              <div className="col-span-2 space-y-2">
-                <label className="text-sm font-medium text-text-primary">Patient Image URL</label>
-                <div className="relative">
-                  <Upload className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-secondary" />
-                  <input type="text" name="avatar" value={form.avatar} onChange={handleChange} placeholder="https://..."
-                    className="w-full pl-10 pr-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-text-primary placeholder:text-text-secondary outline-none focus:border-medicore-primary/50 transition-all" />
-                </div>
-              </div>
-            </div>
-
+            {/* Email Field */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-text-primary">Assign Doctor</label>
+              <label className="text-sm font-medium text-text-primary">Email (Optional)</label>
               <div className="relative">
-                <Stethoscope className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-secondary" />
-                <select 
-                  name="doctorId" 
-                  value={form.doctorId} 
-                  onChange={handleChange}
-                  className="w-full pl-10 pr-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-text-primary outline-none focus:border-medicore-primary/50 transition-all appearance-none cursor-pointer"
-                >
-                  <option value="" className="bg-[#1e293b]">Select Doctor</option>
-                  {doctors.map(doc => (
-                    <option key={doc.id} value={doc.id} className="bg-[#1e293b]">{doc.name} ({doc.specialization})</option>
-                  ))}
-                </select>
-                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-secondary pointer-events-none" />
+                <Mail className={`absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 transition-colors ${errors.email ? 'text-red-400' : 'text-text-secondary'}`} />
+                <input 
+                  {...register('email')}
+                  type="email" 
+                  placeholder="john@example.com"
+                  className={`w-full pl-10 pr-4 py-2.5 bg-white/5 border rounded-xl text-text-primary placeholder:text-text-secondary outline-none transition-all ${
+                    errors.email ? 'border-red-400/50 focus:border-red-400' : 'border-white/10 focus:border-medicore-primary/50'
+                  }`}
+                />
               </div>
+              {errors.email && <p className="text-xs text-red-400 font-medium pl-1">{errors.email.message}</p>}
             </div>
 
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-text-primary">Appointment Reason</label>
-              <textarea name="appointmentReason" value={form.appointmentReason} onChange={handleChange} required placeholder="Describe the reason for visit..." rows={3}
-                className="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-text-primary placeholder:text-text-secondary outline-none focus:border-medicore-primary/50 transition-all resize-none" />
-            </div>
-
-            <button type="submit" disabled={addPatientMutation.isPending} className="w-full flex items-center justify-center gap-2 bg-medicore-primary hover:bg-medicore-dark text-white px-5 py-3 rounded-xl font-medium transition-all shadow-[0_8px_20px_rgba(47,158,143,0.3)] hover:shadow-[0_8px_25px_rgba(47,158,143,0.4)] disabled:opacity-50">
-              {addPatientMutation.isPending ? <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" /> : <><Plus className="w-5 h-5" /> Add Patient</>}
+            <button 
+              type="submit" 
+              disabled={addPatientMutation.isPending} 
+              className="w-full flex items-center justify-center gap-2 bg-medicore-primary hover:bg-medicore-dark text-white px-5 py-3 rounded-xl font-medium transition-all shadow-[0_8px_20px_rgba(47,158,143,0.3)] hover:shadow-[0_8px_25px_rgba(47,158,143,0.4)] disabled:opacity-50 mt-2"
+            >
+              {addPatientMutation.isPending ? (
+                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+              ) : (
+                <><Plus className="w-5 h-5" /> Add Patient</>
+              )}
             </button>
           </form>
         )}
@@ -185,8 +204,8 @@ function AddPatientModal({ onClose }) {
     </motion.div>
   );
 }
-
 /* ... (AppointmentModal, InfoTab, AppointmentsTab, TestsTab, HistoryTab, KYCTab, RecordsTab stay the same) ... */
+
 
 function AppointmentModal({ patient, onClose }) {
   const [form, setForm] = useState({ type: 'Consultation', date: '', time: '', doctor: '', notes: '' });
@@ -483,57 +502,104 @@ function KYCTab({ patient }) {
 }
 
 function RecordsTab({ patient }) {
+  const queryClient = useQueryClient();
   const records = patient?.records || [];
 
-  if (records.length === 0) {
-    return (
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col items-center justify-center py-16 text-text-secondary opacity-60">
-        <FileText className="w-12 h-12 mb-3 text-white/20" />
-        <p className="text-sm italic">No medical records found for this patient.</p>
-      </motion.div>
-    );
-  }
+  const uploadMutation = useMutation({
+    mutationFn: ({ id, formData }) => uploadMedicalRecord(id, formData),
+    onSuccess: () => {
+      toast.success('Record uploaded successfully');
+      queryClient.invalidateQueries({ queryKey: ['patient', patient?._id] });
+    },
+    onError: (error) => {
+      toast.error(error.message || 'Upload failed');
+    }
+  });
 
-  const typeIcons = { 'Lab Report': Activity, 'Imaging': Eye, 'Insurance': ShieldCheck, 'Clinical Note': FileText, 'Prescription': Heart, 'Treatment Plan': Stethoscope, 'Vaccination': Plus, 'Identity': User };
+  const handleFileUpload = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('name', file.name);
+    formData.append('type', file.type.includes('pdf') ? 'Lab Report' : 'Clinical Note');
+
+    uploadMutation.mutate({ id: patient?._id, formData });
+  };
 
   return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-3">
-      {records.map((rec, i) => {
-        const Icon = typeIcons[rec.type] || FileText;
-        return (
-          <motion.div key={rec.id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
-            className="bg-white/5 border border-white/10 rounded-xl p-4 hover:bg-white/10 transition-colors flex items-center justify-between gap-4">
-            <div className="flex items-center gap-4 min-w-0">
-              <div className="p-2.5 bg-medicore-primary/10 rounded-lg text-medicore-primary flex-shrink-0">
-                <Icon className="w-4 h-4" />
-              </div>
-              <div className="min-w-0">
-                <p className="text-white font-medium text-sm truncate">{rec.name}</p>
-                <div className="flex items-center gap-3 text-text-secondary text-xs mt-0.5">
-                  <span>{rec.type}</span>
-                  <span>·</span>
-                  <span>{rec.date}</span>
-                  <span>·</span>
-                  <span>{rec.size}</span>
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <h3 className="text-lg font-bold text-white">Medical Records</h3>
+          <p className="text-text-secondary text-xs">Manage and view patient documents.</p>
+        </div>
+        <label className="cursor-pointer bg-medicore-primary hover:bg-medicore-dark text-white px-4 py-2 rounded-xl text-sm font-medium transition-all flex items-center gap-2 shadow-lg hover:-translate-y-0.5">
+          {uploadMutation.isPending ? (
+            <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+          ) : (
+            <Upload className="w-4 h-4" />
+          )}
+          {uploadMutation.isPending ? 'Uploading...' : 'Upload New'}
+          <input type="file" className="hidden" onChange={handleFileUpload} disabled={uploadMutation.isPending} />
+        </label>
+      </div>
+
+      {records.length === 0 ? (
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col items-center justify-center py-16 text-text-secondary opacity-60">
+          <FileText className="w-12 h-12 mb-3 text-white/20" />
+          <p className="text-sm italic">No medical records found for this patient.</p>
+        </motion.div>
+      ) : (
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-3">
+          {records.map((rec, i) => {
+            const typeIcons = { 'Lab Report': Activity, 'Imaging': Eye, 'Insurance': ShieldCheck, 'Clinical Note': FileText, 'Prescription': Heart, 'Treatment Plan': Stethoscope, 'Vaccination': Plus, 'Identity': User };
+            const Icon = typeIcons[rec.type] || FileText;
+            return (
+              <motion.div key={rec.id || i} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
+                className="bg-white/5 border border-white/10 rounded-xl p-4 hover:bg-white/10 transition-colors flex items-center justify-between gap-4">
+                <div className="flex items-center gap-4 min-w-0">
+                  <div className="p-2.5 bg-medicore-primary/10 rounded-lg text-medicore-primary flex-shrink-0">
+                    <Icon className="w-4 h-4" />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-white font-medium text-sm truncate">{rec.name}</p>
+                    <div className="flex items-center gap-3 text-text-secondary text-xs mt-0.5">
+                      <span>{rec.type}</span>
+                      <span>·</span>
+                      <span>{new Date(rec.date).toLocaleDateString()}</span>
+                      <span>·</span>
+                      <span>{rec.size}</span>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div className="flex items-center gap-2 flex-shrink-0">
-              <button className="p-2 hover:bg-white/10 rounded-lg transition text-text-secondary hover:text-white" title="View">
-                <Eye className="w-4 h-4" />
-              </button>
-              <button 
-                onClick={() => alert(`Downloading ${rec.name}...`)}
-                className="p-2 hover:bg-medicore-primary/10 rounded-lg transition text-text-secondary hover:text-medicore-primary" title="Download">
-                <Download className="w-4 h-4" />
-              </button>
-            </div>
-          </motion.div>
-        );
-      })}
-    </motion.div>
+                <div className="flex items-center gap-2 flex-shrink-0">
+                  <a 
+                    href={rec.url} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="p-2 hover:bg-white/10 rounded-lg transition text-text-secondary hover:text-white" title="View"
+                  >
+                    <Eye className="w-4 h-4" />
+                  </a>
+                  <a 
+                    href={rec.url} 
+                    download
+                    target="_blank"
+                    className="p-2 hover:bg-medicore-primary/10 rounded-lg transition text-text-secondary hover:text-medicore-primary" title="Download">
+                    <Download className="w-4 h-4" />
+                  </a>
+                </div>
+              </motion.div>
+            );
+          })}
+        </motion.div>
+      )}
+    </div>
   );
 }
+
 
 export default function Patients() {
   const { id } = useParams();
@@ -553,6 +619,13 @@ export default function Patients() {
     enabled: !!patientId,
   });
 
+  useEffect(() => {
+    if (error) {
+      toast.error('Failed to load patient data. ' + (error.message || ''));
+    }
+  }, [error]);
+
+
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
@@ -560,6 +633,18 @@ export default function Patients() {
       setSearchQuery('');
     }
   };
+
+  const handleExportCSV = () => {
+    window.open('/api/patients/export/csv', '_blank');
+    toast.success('Exporting patients list...');
+  };
+
+  const handleExportPDF = () => {
+    if (!patient) return;
+    window.open(`/api/patients/${patient._id}/export/pdf`, '_blank');
+    toast.success(`Generating PDF report for ${patient.name}...`);
+  };
+
 
   const tabs = ['Info', 'Appointments', 'Tests', 'History', 'KYC', 'Records'];
   const TIMELINE_PREVIEW_COUNT = 3;
@@ -602,12 +687,21 @@ export default function Patients() {
         </form>
         <div className="flex gap-3 w-full md:w-auto">
           <button 
+            onClick={handleExportCSV}
+            className="flex-1 md:flex-none flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 text-text-secondary hover:text-white px-5 py-2.5 rounded-xl font-medium border border-white/10 transition-all"
+            title="Export all patients to CSV"
+          >
+            <Download className="w-5 h-5" />
+            Export CSV
+          </button>
+          <button 
             onClick={() => setShowAddPatientModal(true)}
             className="flex-1 md:flex-none flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 text-white px-5 py-2.5 rounded-xl font-medium border border-white/10 transition-all"
           >
             <Plus className="w-5 h-5" />
             Add Patient
           </button>
+
           <button 
             onClick={() => setShowAppointmentModal(true)}
             className="flex-1 md:flex-none flex items-center justify-center gap-2 bg-medicore-primary hover:bg-medicore-dark text-white px-5 py-2.5 rounded-xl font-medium transition-all shadow-[0_8px_20px_rgba(47,158,143,0.3)]"
@@ -619,10 +713,22 @@ export default function Patients() {
       </div>
 
       {isLoading ? (
-        <div className="flex-1 flex items-center justify-center">
-          <div className="w-10 h-10 border-4 border-medicore-primary border-t-transparent rounded-full animate-spin"></div>
-        </div>
+        <SkeletonWrapper>
+          <div className="space-y-6">
+            <div className="glass-card rounded-2xl p-8 flex items-center gap-6">
+              <ListSkeleton count={1} />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <StatCardSkeleton />
+              <StatCardSkeleton />
+              <StatCardSkeleton />
+              <StatCardSkeleton />
+            </div>
+            <ListSkeleton count={5} />
+          </div>
+        </SkeletonWrapper>
       ) : error ? (
+
         <div className="flex-1 flex flex-col items-center justify-center text-center p-8 glass-card rounded-2xl animate-fade-in">
           <AlertCircle className="w-16 h-16 text-red-500 mb-4" />
           <h2 className="text-2xl font-bold text-white mb-2">Patient Not Found</h2>
@@ -662,7 +768,15 @@ export default function Patients() {
                   <p className="text-text-secondary text-[10px] uppercase font-bold">Weight</p>
                   <p className="text-white font-bold">{patient?.weight}</p>
                 </div>
+                <button 
+                  onClick={handleExportPDF}
+                  className="ml-2 p-3 bg-medicore-primary/10 hover:bg-medicore-primary/20 text-medicore-primary rounded-xl transition-all group"
+                  title="Download Patient Report PDF"
+                >
+                  <FileText className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                </button>
               </div>
+
             </div>
           </motion.div>
 

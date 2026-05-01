@@ -54,3 +54,20 @@ export const createDoctor = async (doctorData) => {
   if (!response.ok) throw new Error('Failed to create doctor');
   return response.json();
 };
+
+export const uploadMedicalRecord = async (patientId, formData) => {
+  const response = await fetch(`${API_BASE}/api/patients/${patientId}/records`, {
+    method: 'POST',
+    body: formData, // No content-type header; browser sets it with boundary
+  });
+  if (!response.ok) throw new Error('Failed to upload medical record');
+  return response.json();
+};
+
+export const fetchAnalyticsData = async (timeRange = '30d') => {
+  const response = await fetch(`${API_BASE}/api/analytics?range=${timeRange}`);
+  if (!response.ok) throw new Error('Failed to fetch analytics data');
+  return response.json();
+};
+
+
