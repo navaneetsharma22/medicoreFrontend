@@ -3,8 +3,9 @@ import { motion } from 'framer-motion';
 import { NavLink } from 'react-router-dom';
 import { 
   Home, Users, Calendar, Activity, Settings, TrendingUp, Heart, 
-  MessageSquare, CreditCard, ShieldCheck, HardDrive, HelpCircle 
+  MessageSquare, CreditCard, ShieldCheck, HardDrive, HelpCircle, Shield
 } from 'lucide-react';
+
 import ProCard from './ProCard';
 
 const navSections = [
