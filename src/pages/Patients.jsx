@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { 
   ArrowLeft, Mail, Phone, Calendar, MapPin, 
   Clock, Activity, FileText, CheckCircle, 
@@ -10,42 +11,45 @@ import {
   Search, Scale, Ruler, Fingerprint
 } from 'lucide-react';
 import Header from '../components/Header';
-import { createPatient } from '../services/api';
+import { fetchPatientById, createPatient, fetchDoctors } from '../services/api';
 
 /* ─── Add Patient Modal ─── */
-import { fetchDoctors } from '../services/api';
-
-function AddPatientModal({ onClose, onPatientAdded }) {
+function AddPatientModal({ onClose }) {
+  const queryClient = useQueryClient();
   const [form, setForm] = useState({
     name: '', email: '', phone: '', address: '',
     idProof: '', height: '', weight: '', appointmentReason: '',
     avatar: '', doctorId: ''
   });
-  const [doctors, setDoctors] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  useEffect(() => {
-    fetchDoctors().then(setDoctors).catch(console.error);
-  }, []);
+  // Fetch doctors using useQuery
+  const { data: doctors = [] } = useQuery({
+    queryKey: ['doctors'],
+    queryFn: fetchDoctors
+  });
+
+  // Mutation for adding a patient
+  const addPatientMutation = useMutation({
+    mutationFn: createPatient,
+    onSuccess: (newPatient) => {
+      setSubmitted(true);
+      // Invalidate the patients query to refresh data if there was a list
+      queryClient.invalidateQueries({ queryKey: ['patients'] });
+      setTimeout(() => {
+        onClose();
+      }, 1500);
+    },
+    onError: () => {
+      alert('Failed to add patient');
+    }
+  });
 
   const handleChange = (e) => setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setLoading(true);
-    try {
-      const newPatient = await createPatient(form);
-      setSubmitted(true);
-      setTimeout(() => {
-        onPatientAdded(newPatient);
-        onClose();
-      }, 1500);
-    } catch (err) {
-      alert('Failed to add patient');
-    } finally {
-      setLoading(false);
-    }
+    addPatientMutation.mutate(form);
   };
 
   return (
@@ -172,8 +176,8 @@ function AddPatientModal({ onClose, onPatientAdded }) {
                 className="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-text-primary placeholder:text-text-secondary outline-none focus:border-medicore-primary/50 transition-all resize-none" />
             </div>
 
-            <button type="submit" disabled={loading} className="w-full flex items-center justify-center gap-2 bg-medicore-primary hover:bg-medicore-dark text-white px-5 py-3 rounded-xl font-medium transition-all shadow-[0_8px_20px_rgba(47,158,143,0.3)] hover:shadow-[0_8px_25px_rgba(47,158,143,0.4)] disabled:opacity-50">
-              {loading ? <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" /> : <><Plus className="w-5 h-5" /> Add Patient</>}
+            <button type="submit" disabled={addPatientMutation.isPending} className="w-full flex items-center justify-center gap-2 bg-medicore-primary hover:bg-medicore-dark text-white px-5 py-3 rounded-xl font-medium transition-all shadow-[0_8px_20px_rgba(47,158,143,0.3)] hover:shadow-[0_8px_25px_rgba(47,158,143,0.4)] disabled:opacity-50">
+              {addPatientMutation.isPending ? <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" /> : <><Plus className="w-5 h-5" /> Add Patient</>}
             </button>
           </form>
         )}
@@ -182,7 +186,8 @@ function AddPatientModal({ onClose, onPatientAdded }) {
   );
 }
 
-/* ─── Appointment Modal ─── */
+/* ... (AppointmentModal, InfoTab, AppointmentsTab, TestsTab, HistoryTab, KYCTab, RecordsTab stay the same) ... */
+
 function AppointmentModal({ patient, onClose }) {
   const [form, setForm] = useState({ type: 'Consultation', date: '', time: '', doctor: '', notes: '' });
   const [submitted, setSubmitted] = useState(false);
@@ -268,7 +273,6 @@ function AppointmentModal({ patient, onClose }) {
   );
 }
 
-/* ─── Tab: Info ─── */
 function InfoTab({ patient }) {
   const infoItems = [
     { icon: User, label: 'Full Name', value: patient?.name },
@@ -306,7 +310,6 @@ function InfoTab({ patient }) {
   );
 }
 
-/* ─── Tab: Appointments ─── */
 function AppointmentsTab({ patient }) {
   const appointments = patient?.appointments || [
     { id: 'ap1', type: 'Current', title: 'General Consultation', doctor: 'Dr. Sarah L.', date: '2023-12-15', time: '10:00 AM', status: 'upcoming' },
@@ -354,7 +357,6 @@ function AppointmentsTab({ patient }) {
   );
 }
 
-/* ─── Tab: Tests ─── */
 function TestsTab({ patient }) {
   const tests = patient?.tests || [
     { id: 't1', name: 'Complete Blood Count (CBC)', date: '2023-11-20', result: 'Normal', status: 'completed' },
@@ -386,7 +388,6 @@ function TestsTab({ patient }) {
   );
 }
 
-/* ─── Tab: History ─── */
 function HistoryTab({ patient }) {
   const history = patient?.history || [];
   const typeColors = {
@@ -443,7 +444,6 @@ function HistoryTab({ patient }) {
   );
 }
 
-/* ─── Tab: KYC ─── */
 function KYCTab({ patient }) {
   const docs = patient?.kycDocuments || [];
 
@@ -482,7 +482,6 @@ function KYCTab({ patient }) {
   );
 }
 
-/* ─── Tab: Records ─── */
 function RecordsTab({ patient }) {
   const records = patient?.records || [];
 
@@ -536,38 +535,23 @@ function RecordsTab({ patient }) {
   );
 }
 
-/* ─── Main Page ─── */
 export default function Patients() {
   const { id } = useParams();
   const navigate = useNavigate();
   const patientId = id || '1';
   
-  const [patient, setPatient] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [activeTab, setActiveTab] = useState('Info');
   const [showAppointmentModal, setShowAppointmentModal] = useState(false);
   const [showAddPatientModal, setShowAddPatientModal] = useState(false);
   const [showAllTimeline, setShowAllTimeline] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
-  const fetchPatient = async (pid) => {
-    try {
-      setLoading(true);
-      const response = await fetch(`/api/patients/${pid}`);
-      if (!response.ok) throw new Error(`Patient ${pid} not found`);
-      const data = await response.json();
-      setPatient(data);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchPatient(patientId);
-  }, [patientId]);
+  // useQuery to fetch patient data
+  const { data: patient, isLoading, error } = useQuery({
+    queryKey: ['patient', patientId],
+    queryFn: () => fetchPatientById(patientId),
+    enabled: !!patientId,
+  });
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -601,7 +585,7 @@ export default function Patients() {
       {/* Modals */}
       <AnimatePresence>
         {showAppointmentModal && <AppointmentModal patient={patient} onClose={() => setShowAppointmentModal(false)} />}
-        {showAddPatientModal && <AddPatientModal onClose={() => setShowAddPatientModal(false)} onPatientAdded={(p) => navigate(`/patients/${p.id}`)} />}
+        {showAddPatientModal && <AddPatientModal onClose={() => setShowAddPatientModal(false)} />}
       </AnimatePresence>
 
       {/* Action Bar */}
@@ -634,15 +618,15 @@ export default function Patients() {
         </div>
       </div>
 
-      {loading ? (
+      {isLoading ? (
         <div className="flex-1 flex items-center justify-center">
           <div className="w-10 h-10 border-4 border-medicore-primary border-t-transparent rounded-full animate-spin"></div>
         </div>
-      ) : error && !patient ? (
+      ) : error ? (
         <div className="flex-1 flex flex-col items-center justify-center text-center p-8 glass-card rounded-2xl animate-fade-in">
           <AlertCircle className="w-16 h-16 text-red-500 mb-4" />
           <h2 className="text-2xl font-bold text-white mb-2">Patient Not Found</h2>
-          <p className="text-text-secondary mb-6">{error}</p>
+          <p className="text-text-secondary mb-6">{error.message}</p>
           <button onClick={() => navigate('/dashboard')} className="bg-white/10 hover:bg-white/20 text-white px-6 py-2 rounded-xl transition">Go Back</button>
         </div>
       ) : (

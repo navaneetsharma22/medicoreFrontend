@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
+import { Toaster } from 'react-hot-toast';
 import Dashboard from './pages/Dashboard';
+
 import Patients from './pages/Patients';
 import Schedule from './pages/Schedule';
 import Messages from './pages/Messages';
@@ -65,7 +67,9 @@ function App() {
           <Route path="/admin" element={<Admin />} />
         </Route>
       </Routes>
+      <Toaster position="top-right" reverseOrder={false} />
     </Router>
+
   );
 }
 
