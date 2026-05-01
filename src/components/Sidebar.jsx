@@ -1,16 +1,40 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { NavLink } from 'react-router-dom';
-import { Home, Users, Calendar, Activity, Settings, TrendingUp, Heart } from 'lucide-react';
+import { 
+  Home, Users, Calendar, Activity, Settings, TrendingUp, Heart, 
+  MessageSquare, CreditCard, ShieldCheck, HardDrive, HelpCircle 
+} from 'lucide-react';
 import ProCard from './ProCard';
 
-const navItems = [
-  { id: 'dashboard', path: '/dashboard', label: 'Dashboard', icon: Home },
-  { id: 'patients', path: '/patients', label: 'Patients', icon: Users },
-  { id: 'schedule', path: '/schedule', label: 'Schedule', icon: Calendar },
-  { id: 'analytics', path: '/analytics', label: 'Analytics', icon: TrendingUp },
-  { id: 'activity', path: '/activity', label: 'Activity', icon: Activity },
-  { id: 'settings', path: '/settings', label: 'Settings', icon: Settings },
+const navSections = [
+  {
+    title: 'Menu',
+    items: [
+      { id: 'dashboard', path: '/dashboard', label: 'Dashboard', icon: Home },
+      { id: 'patients', path: '/patients', label: 'Patients', icon: Users },
+      { id: 'schedule', path: '/schedule', label: 'Schedule', icon: Calendar },
+      { id: 'messages', path: '/messages', label: 'Messages', icon: MessageSquare, badge: 4 },
+    ]
+  },
+  {
+    title: 'Management',
+    items: [
+      { id: 'analytics', path: '/analytics', label: 'Analytics', icon: TrendingUp },
+      { id: 'records', path: '/records', label: 'Medical Cloud', icon: HardDrive },
+      { id: 'billing', path: '/billing', label: 'Billing', icon: CreditCard },
+      { id: 'staff', path: '/staff', label: 'Staff Team', icon: ShieldCheck },
+    ]
+  },
+  {
+    title: 'System',
+    items: [
+      { id: 'activity', path: '/activity', label: 'Activity Log', icon: Activity },
+      { id: 'admin', path: '/admin', label: 'Admin Panel', icon: Shield },
+      { id: 'settings', path: '/settings', label: 'Settings', icon: Settings },
+      { id: 'support', path: '/support', label: 'Support', icon: HelpCircle },
+    ]
+  }
 ];
 
 export default function Sidebar() {
@@ -26,40 +50,54 @@ export default function Sidebar() {
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 space-y-2">
-        {navItems.map((item) => {
-          const Icon = item.icon;
-          
-          return (
-            <NavLink
-              to={item.path}
-              key={item.id}
-              className={({ isActive }) => `w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all duration-300 relative group ${
-                isActive 
-                  ? 'bg-medicore-primary/80 dark:bg-medicore-primary-hover shadow-[0_0_20px_rgba(47,158,143,0.5)] dark:shadow-none text-white dark:text-[#3DB6A3]' 
-                  : 'hover:bg-white/10 dark:hover:bg-medicore-primary/10 text-white/70 dark:text-text-secondary hover:text-white dark:hover:text-text-primary dark:hover:shadow-[0_0_25px_rgba(47,158,143,0.35)]'
-              }`}
-            >
-              {({ isActive }) => (
-                <>
-                  <Icon className={`w-5 h-5 transition-colors ${isActive ? 'text-white dark:text-[#3DB6A3]' : 'text-white/70 dark:text-text-secondary group-hover:text-white dark:group-hover:text-text-primary'}`} />
-                  <span className={`font-medium transition-colors ${isActive ? 'text-white dark:text-[#3DB6A3]' : 'text-white/70 dark:text-text-secondary group-hover:text-white dark:group-hover:text-text-primary'}`}>
-                    {item.label}
-                  </span>
-                  
-                  {isActive && (
-                     <motion.div 
-                       layoutId="active-navIndicator" 
-                       className="absolute left-0 w-1 h-8 bg-white rounded-r-full"
-                       initial={false}
-                       transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                     />
-                  )}
-                </>
-              )}
-            </NavLink>
-          );
-        })}
+      <nav className="flex-1 space-y-8 overflow-y-auto custom-scrollbar pr-1">
+        {navSections.map((section) => (
+          <div key={section.title}>
+            <p className="text-[10px] uppercase font-bold text-white/40 dark:text-text-secondary/50 tracking-[2px] mb-4 px-4">
+              {section.title}
+            </p>
+            <div className="space-y-1">
+              {section.items.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <NavLink
+                    to={item.path}
+                    key={item.id}
+                    className={({ isActive }) => `w-full flex items-center gap-3 px-4 py-2.5 rounded-xl transition-all duration-300 relative group ${
+                      isActive 
+                        ? 'bg-medicore-primary/80 dark:bg-medicore-primary-hover shadow-[0_0_20px_rgba(47,158,143,0.3)] dark:shadow-none text-white dark:text-[#3DB6A3]' 
+                        : 'hover:bg-white/10 dark:hover:bg-medicore-primary/5 text-white/60 dark:text-text-secondary hover:text-white dark:hover:text-text-primary'
+                    }`}
+                  >
+                    {({ isActive }) => (
+                      <>
+                        <Icon className={`w-4.5 h-4.5 transition-colors ${isActive ? 'text-white dark:text-[#3DB6A3]' : 'text-white/60 dark:text-text-secondary group-hover:text-white dark:group-hover:text-text-primary'}`} />
+                        <span className={`text-sm font-medium transition-colors ${isActive ? 'text-white dark:text-[#3DB6A3]' : 'text-white/60 dark:text-text-secondary group-hover:text-white dark:group-hover:text-text-primary'}`}>
+                          {item.label}
+                        </span>
+                        
+                        {item.badge && (
+                          <span className="ml-auto bg-medicore-primary dark:bg-[#3DB6A3] text-white dark:text-medicore-bg text-[10px] font-bold px-2 py-0.5 rounded-full shadow-lg">
+                            {item.badge}
+                          </span>
+                        )}
+
+                        {isActive && (
+                           <motion.div 
+                             layoutId="active-navIndicator" 
+                             className="absolute left-0 w-1 h-6 bg-white dark:bg-[#3DB6A3] rounded-r-full"
+                             initial={false}
+                             transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                           />
+                        )}
+                      </>
+                    )}
+                  </NavLink>
+                );
+              })}
+            </div>
+          </div>
+        ))}
       </nav>
 
       {/* Bottom CTA Card */}

@@ -28,3 +28,29 @@ export const fetchPatientById = async (id) => {
   if (!response.ok) throw new Error('Failed to fetch patient');
   return response.json();
 };
+export const createPatient = async (patientData) => {
+  const response = await fetch(`${API_BASE}/api/patients`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(patientData),
+  });
+  if (!response.ok) throw new Error('Failed to create patient');
+  return response.json();
+};
+
+// Doctor APIs
+export const fetchDoctors = async () => {
+  const response = await fetch(`${API_BASE}/api/doctors`);
+  if (!response.ok) throw new Error('Failed to fetch doctors');
+  return response.json();
+};
+
+export const createDoctor = async (doctorData) => {
+  const response = await fetch(`${API_BASE}/api/doctors`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(doctorData),
+  });
+  if (!response.ok) throw new Error('Failed to create doctor');
+  return response.json();
+};

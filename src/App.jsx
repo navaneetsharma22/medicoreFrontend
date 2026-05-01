@@ -3,6 +3,16 @@ import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom
 import Sidebar from './components/Sidebar';
 import Dashboard from './pages/Dashboard';
 import Patients from './pages/Patients';
+import Schedule from './pages/Schedule';
+import Messages from './pages/Messages';
+import Records from './pages/Records';
+import Billing from './pages/Billing';
+import Staff from './pages/Staff';
+import Analytics from './pages/Analytics';
+import ActivityLog from './pages/ActivityLog';
+import Settings from './pages/Settings';
+import Support from './pages/Support';
+import Admin from './pages/Admin';
 import PlaceholderPage from './pages/PlaceholderPage';
 import Auth from './pages/Auth';
 
@@ -43,10 +53,16 @@ function App() {
         <Route element={<DashboardLayout />}>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/patients/:id?" element={<Patients />} />
-          <Route path="/schedule" element={<PlaceholderPage title="Schedule" />} />
-          <Route path="/analytics" element={<PlaceholderPage title="Analytics" />} />
-          <Route path="/activity" element={<PlaceholderPage title="Activity" />} />
-          <Route path="/settings" element={<PlaceholderPage title="Settings" />} />
+          <Route path="/schedule" element={<Schedule />} />
+          <Route path="/messages" element={<Messages />} />
+          <Route path="/analytics" element={<Analytics />} />
+          <Route path="/records" element={<Records />} />
+          <Route path="/billing" element={<Billing />} />
+          <Route path="/staff" element={<Staff />} />
+          <Route path="/activity" element={<ActivityLog />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/support" element={<Support />} />
+          <Route path="/admin" element={<Admin />} />
         </Route>
       </Routes>
     </Router>
