@@ -5,7 +5,7 @@ import {
   Sparkles, CheckCircle2, AlertCircle, Zap, Clock,
   ArrowUpRight, TrendingUp, Filter
 } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import Header from '../components/Header';
 import StatCard from '../components/StatCard';
 import ChartCard from '../components/ChartCard';
@@ -13,49 +13,55 @@ import BarChartCard from '../components/BarChartCard';
 import CalendarWidget from '../components/Calendar';
 import Upcoming from '../components/Upcoming';
 import ActivityFeed from '../components/Activity';
+import TelehealthModal from '../components/TelehealthModal';
 import { fetchDashboardData } from '../services/api';
+import { generateDailyBriefing, prioritizeActivity } from '../services/intelligence';
 import { SkeletonWrapper, StatCardSkeleton, ChartSkeleton, ListSkeleton } from '../components/SkeletonLoader';
 
 // --- Sub-components for the new Zones ---
 
-const AIBriefing = ({ data }) => (
-  <motion.div 
-    initial={{ opacity: 0, y: -20 }}
-    animate={{ opacity: 1, y: 0 }}
-    className="glass-card p-6 bg-gradient-to-r from-mediBuddy-primary/20 via-mediBuddy-primary/10 to-transparent border-l-4 border-mediBuddy-primary mb-8 overflow-hidden relative group"
-  >
-    <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-      <Sparkles className="w-24 h-24 text-mediBuddy-primary" />
-    </div>
-    <div className="flex items-center gap-4 relative z-10">
-      <div className="p-3 bg-mediBuddy-primary rounded-2xl shadow-lg shadow-mediBuddy-primary/30">
-        <Sparkles className="w-6 h-6 text-white" />
+const AIBriefing = ({ data }) => {
+  const briefing = generateDailyBriefing(data);
+  return (
+    <motion.div 
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="glass-card p-6 bg-gradient-to-r from-mediBuddy-primary/20 via-mediBuddy-primary/10 to-transparent border-l-4 border-mediBuddy-primary mb-8 overflow-hidden relative group"
+    >
+      <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+        <Sparkles className="w-24 h-24 text-mediBuddy-primary" />
       </div>
-      <div>
-        <h3 className="text-xl font-bold text-white mb-1 flex items-center gap-2">
-          AI Daily Briefing
-          <span className="text-[10px] bg-white/10 px-2 py-0.5 rounded-full uppercase tracking-widest">Beta</span>
-        </h3>
-        <p className="text-text-secondary font-medium">
-          Good morning, <span className="text-mediBuddy-primary">Dr. Sarah</span>. You have <span className="text-white">12 appointments</span> today and <span className="text-rose-400">3 urgent lab results</span> pending review.
-        </p>
+      <div className="flex items-center gap-4 relative z-10">
+        <div className="p-3 bg-mediBuddy-primary rounded-2xl shadow-lg shadow-mediBuddy-primary/30">
+          <Sparkles className="w-6 h-6 text-white" />
+        </div>
+        <div>
+          <h3 className="text-xl font-bold text-white mb-1 flex items-center gap-2">
+            AI Daily Briefing
+            <span className="text-[10px] bg-white/10 px-2 py-0.5 rounded-full uppercase tracking-widest">Beta</span>
+          </h3>
+          <p className="text-text-secondary font-medium">
+            {briefing}
+          </p>
+        </div>
       </div>
-    </div>
-  </motion.div>
-);
+    </motion.div>
+  );
+};
 
-const QuickActions = () => (
+const QuickActions = ({ onTelehealthClick }) => (
   <div className="grid grid-cols-2 gap-4">
     {[
       { label: 'New Patient', icon: Plus, color: 'bg-mediBuddy-primary' },
       { label: 'Prescription', icon: Zap, color: 'bg-blue-500' },
-      { label: 'Telehealth', icon: Activity, color: 'bg-purple-500' },
+      { label: 'Telehealth', icon: Activity, color: 'bg-purple-500', onClick: onTelehealthClick },
       { label: 'Add Task', icon: Clock, color: 'bg-amber-500' },
     ].map((action, i) => (
       <motion.button
         key={action.label}
         whileHover={{ scale: 1.02, translateY: -2 }}
         whileTap={{ scale: 0.98 }}
+        onClick={action.onClick || (() => alert(`Opening ${action.label}...`))}
         className="glass-card p-4 flex flex-col items-center justify-center gap-3 group transition-all"
       >
         <div className={`p-3 ${action.color} rounded-xl text-white shadow-lg shadow-${action.color}/20 group-hover:scale-110 transition-transform`}>
@@ -67,38 +73,46 @@ const QuickActions = () => (
   </div>
 );
 
-const TaskTriage = () => (
-  <div className="glass-card p-6 space-y-4">
-    <div className="flex items-center justify-between mb-2">
-      <h3 className="text-sm font-bold text-white uppercase tracking-widest">Clinical Tasks</h3>
-      <Filter className="w-4 h-4 text-text-secondary cursor-pointer hover:text-white" />
-    </div>
-    {[
-      { title: 'Review MRI Scan - Patient #1024', time: '10 mins ago', priority: 'high', icon: AlertCircle },
-      { title: 'Finalize Consultation Notes - Dr. Sam', time: '1 hr ago', priority: 'medium', icon: Clock },
-      { title: 'Approve Pharmacy Request', time: '2 hrs ago', priority: 'low', icon: CheckCircle2 },
-    ].map((task, i) => (
-      <div key={i} className="flex items-center gap-4 p-3 bg-white/5 rounded-xl border border-white/5 hover:border-mediBuddy-primary/30 transition-all cursor-pointer group">
-        <div className={`p-2 rounded-lg ${
-          task.priority === 'high' ? 'text-rose-400 bg-rose-400/10' : 
-          task.priority === 'medium' ? 'text-amber-400 bg-amber-400/10' : 'text-mediBuddy-primary bg-mediBuddy-primary/10'
-        }`}>
-          <task.icon className="w-4 h-4" />
-        </div>
-        <div className="flex-1 min-w-0">
-          <p className="text-sm font-bold text-white truncate group-hover:text-mediBuddy-primary transition-colors">{task.title}</p>
-          <p className="text-[10px] text-text-secondary">{task.time}</p>
-        </div>
+const TaskTriage = ({ activities }) => {
+  const triagedTasks = prioritizeActivity(activities);
+
+  return (
+    <div className="glass-card p-6 space-y-4">
+      <div className="flex items-center justify-between mb-2">
+        <h3 className="text-sm font-bold text-white uppercase tracking-widest">Clinical Triage</h3>
+        <Zap className="w-4 h-4 text-mediBuddy-primary animate-pulse" />
       </div>
-    ))}
-  </div>
-);
+      {triagedTasks.length > 0 ? triagedTasks.map((task, i) => (
+        <div key={i} className="flex items-center gap-4 p-3 bg-white/5 rounded-xl border border-white/5 hover:border-mediBuddy-primary/30 transition-all cursor-pointer group">
+          <div className={`p-2 rounded-lg ${
+            task.type === 'alert' ? 'text-rose-400 bg-rose-400/10' : 
+            task.type === 'document' ? 'text-blue-400 bg-blue-400/10' : 'text-mediBuddy-primary bg-mediBuddy-primary/10'
+          }`}>
+            {task.type === 'alert' ? <AlertCircle className="w-4 h-4" /> : 
+             task.type === 'document' ? <Clock className="w-4 h-4" /> : <CheckCircle2 className="w-4 h-4" />}
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-sm font-bold text-white truncate group-hover:text-mediBuddy-primary transition-colors">{task.title}</p>
+            <p className="text-[10px] text-text-secondary">{task.target} · {task.time}</p>
+          </div>
+          {task.priorityScore > 70 && (
+            <div className="w-2 h-2 rounded-full bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.6)]" />
+          )}
+        </div>
+      )) : (
+        <p className="text-xs text-text-secondary text-center py-4 italic">No active tasks to triage.</p>
+      )}
+    </div>
+  );
+};
 
 export default function Dashboard() {
   const { data, isLoading, error } = useQuery({
     queryKey: ['dashboard'],
     queryFn: fetchDashboardData
   });
+
+  const [showTelehealth, setShowTelehealth] = React.useState(false);
 
   const handleNewAppointment = () => {
     alert("Opening 'New Appointment' Modal...");
@@ -219,21 +233,29 @@ export default function Dashboard() {
 
           <section className="space-y-4">
             <h3 className="text-sm font-bold text-text-secondary uppercase tracking-widest px-2">Quick Actions</h3>
-            <QuickActions />
+            <QuickActions onTelehealthClick={() => setShowTelehealth(true)} />
           </section>
 
           <section className="space-y-4">
             <h3 className="text-sm font-bold text-text-secondary uppercase tracking-widest px-2">Triage & Tasks</h3>
-            <TaskTriage />
+            <TaskTriage activities={data.activity} />
           </section>
 
           <section className="space-y-4">
              <h3 className="text-sm font-bold text-text-secondary uppercase tracking-widest px-2">Live Activity</h3>
              <ActivityFeed data={data.activity} />
           </section>
-        </div>
       </div>
     </div>
+
+    <AnimatePresence>
+      {showTelehealth && (
+        <TelehealthModal 
+          onClose={() => setShowTelehealth(false)} 
+        />
+      )}
+    </AnimatePresence>
+  </div>
   );
 }
 
