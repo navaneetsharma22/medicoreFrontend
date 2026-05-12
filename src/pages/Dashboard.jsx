@@ -171,11 +171,11 @@ export default function Dashboard() {
         <div className="xl:col-span-8 space-y-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <StatCard 
-              title="Patient Recovery" 
-              value={`${data.stats.totalPatients.value}%`} 
+              title="Total Patients" 
+              value={data.stats.totalPatients.value} 
               trend="up" 
-              trendValue="4.2%" 
-              icon={TrendingUp} 
+              trendValue={data.stats.totalPatients.trendValue} 
+              icon={Users} 
               delay={0.1} 
             />
             <StatCard 

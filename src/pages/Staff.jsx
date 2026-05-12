@@ -88,7 +88,7 @@ export default function Staff() {
                  <div className="flex items-center gap-4 mb-6">
                     <div className="relative">
                       <img src={member.avatar} className="w-16 h-16 rounded-2xl border-2 border-white/10 object-cover" alt="" />
-                      <div className={`absolute -bottom-1 -right-1 w-4 h-4 border-2 border-[#1e293b] rounded-full ${
+                      <div className={`absolute -bottom-1 -right-1 w-4 h-4 border-2 border-mediBuddy-bg rounded-full ${
                         member.status === 'active' ? 'bg-green-500' : 'bg-amber-500'
                       }`} />
                     </div>
@@ -110,7 +110,7 @@ export default function Staff() {
                  <div className="flex items-center justify-between pt-6 border-t border-white/10">
                     <div className="flex -space-x-2">
                        {Array.from({ length: 3 }).map((_, j) => (
-                          <div key={j} className="w-8 h-8 rounded-full bg-white/5 border border-[#1e293b] flex items-center justify-center text-[10px] font-bold text-white">
+                          <div key={j} className="w-8 h-8 rounded-full bg-white/5 border border-mediBuddy-bg flex items-center justify-center text-[10px] font-bold text-white">
                              <User className="w-3.5 h-3.5 text-text-secondary" />
                           </div>
                        ))}

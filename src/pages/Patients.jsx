@@ -142,10 +142,10 @@ function AddPatientModal({ onClose }) {
                       errors.gender ? 'border-red-400/50 focus:border-red-400' : 'border-white/10 focus:border-mediBuddy-primary/50'
                     }`}
                   >
-                    <option value="" className="bg-[#1e293b]">Select Gender</option>
-                    <option value="Male" className="bg-[#1e293b]">Male</option>
-                    <option value="Female" className="bg-[#1e293b]">Female</option>
-                    <option value="Other" className="bg-[#1e293b]">Other</option>
+                    <option value="" className="bg-mediBuddy-bg">Select Gender</option>
+                    <option value="Male" className="bg-mediBuddy-bg">Male</option>
+                    <option value="Female" className="bg-mediBuddy-bg">Female</option>
+                    <option value="Other" className="bg-mediBuddy-bg">Other</option>
                   </select>
                   <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-secondary pointer-events-none" />
                 </div>
@@ -747,7 +747,7 @@ export default function Patients() {
                 <div className="flex items-center gap-4">
                   <div className="relative">
                     <img src={patient?.avatar || `https://api.dicebear.com/7.x/initials/svg?seed=${patient?.name || 'U'}`} alt="Avatar" className="w-20 h-20 rounded-full object-cover border-2 border-mediBuddy-primary" />
-                    <div className="absolute bottom-0 right-0 w-5 h-5 bg-green-500 border-2 border-[#1e293b] rounded-full"></div>
+                    <div className="absolute bottom-0 right-0 w-5 h-5 bg-green-500 border-2 border-mediBuddy-bg rounded-full"></div>
                   </div>
                   <div>
                     <h1 className="text-3xl font-bold text-white tracking-tight">{patient?.name || 'Unknown'}</h1>
