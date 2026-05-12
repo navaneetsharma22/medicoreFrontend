@@ -8,7 +8,7 @@ import {
 import Header from '../components/Header';
 
 const activities = [
-  { id: 1, user: 'Admin', action: 'New patient registered', detail: 'Alice Walker', time: '5 mins ago', icon: UserPlus, color: 'text-medicore-primary', bg: 'bg-medicore-primary/10' },
+  { id: 1, user: 'Admin', action: 'New patient registered', detail: 'Alice Walker', time: '5 mins ago', icon: UserPlus, color: 'text-mediBuddy-primary', bg: 'bg-mediBuddy-primary/10' },
   { id: 2, user: 'Dr. Sarah L.', action: 'Medical report updated', detail: 'Blood Test #8821', time: '12 mins ago', icon: FileText, color: 'text-blue-400', bg: 'bg-blue-400/10' },
   { id: 3, user: 'System', action: 'Database backup completed', detail: '1.2 GB stored in Cloud', time: '45 mins ago', icon: Shield, color: 'text-purple-400', bg: 'bg-purple-400/10' },
   { id: 4, user: 'Dr. Mark R.', action: 'Schedule changed', detail: 'Consultation with Robert Fox', time: '1 hour ago', icon: Calendar, color: 'text-amber-400', bg: 'bg-amber-400/10' },
@@ -37,7 +37,7 @@ export default function ActivityLog() {
                 <input 
                   type="text" 
                   placeholder="Search logs..." 
-                  className="pl-10 pr-4 py-2.5 bg-white/5 border border-white/10 rounded-2xl text-sm text-text-primary placeholder:text-text-secondary outline-none focus:border-medicore-primary/50"
+                  className="pl-10 pr-4 py-2.5 bg-white/5 border border-white/10 rounded-2xl text-sm text-text-primary placeholder:text-text-secondary outline-none focus:border-mediBuddy-primary/50"
                 />
              </div>
              <button className="flex items-center gap-2 px-4 py-2.5 bg-white/5 border border-white/10 rounded-2xl text-text-primary text-sm hover:bg-white/10 transition">
@@ -65,7 +65,7 @@ export default function ActivityLog() {
                   <div className="flex-1 pt-1">
                      <div className="flex flex-col md:flex-row md:items-center justify-between mb-1">
                         <h4 className="text-white font-bold text-sm">
-                           {log.action} <span className="text-medicore-primary mx-1">·</span> <span className="text-text-secondary font-medium">{log.detail}</span>
+                           {log.action} <span className="text-mediBuddy-primary mx-1">·</span> <span className="text-text-secondary font-medium">{log.detail}</span>
                         </h4>
                         <span className="text-[10px] uppercase font-bold text-text-secondary tracking-widest">{log.time}</span>
                      </div>
@@ -80,7 +80,7 @@ export default function ActivityLog() {
            <p className="text-xs text-text-secondary italic flex items-center gap-2">
               <Shield className="w-3.5 h-3.5" /> Immutable logs secured via audit-chain protocol
            </p>
-           <button className="text-xs font-bold text-medicore-primary hover:text-white transition">
+           <button className="text-xs font-bold text-mediBuddy-primary hover:text-white transition">
               Download Full Export
            </button>
         </div>

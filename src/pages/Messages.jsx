@@ -49,7 +49,7 @@ export default function Messages() {
               <input 
                 type="text" 
                 placeholder="Search conversations..." 
-                className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/10 rounded-2xl text-text-primary placeholder:text-text-secondary outline-none focus:border-medicore-primary/50 transition-all"
+                className="w-full pl-10 pr-4 py-3 bg-white/5 border border-white/10 rounded-2xl text-text-primary placeholder:text-text-secondary outline-none focus:border-mediBuddy-primary/50 transition-all"
               />
             </div>
 
@@ -59,7 +59,7 @@ export default function Messages() {
                   key={chat.id}
                   onClick={() => setActiveChat(chat)}
                   className={`w-full flex items-center gap-4 p-4 rounded-2xl transition-all duration-300 ${
-                    activeChat.id === chat.id ? 'bg-medicore-primary/20 border border-medicore-primary/30 shadow-lg' : 'hover:bg-white/5 border border-transparent'
+                    activeChat.id === chat.id ? 'bg-mediBuddy-primary/20 border border-mediBuddy-primary/30 shadow-lg' : 'hover:bg-white/5 border border-transparent'
                   }`}
                 >
                   <div className="relative flex-shrink-0">
@@ -74,7 +74,7 @@ export default function Messages() {
                     <p className="text-text-secondary text-xs truncate">{chat.message}</p>
                   </div>
                   {chat.unread > 0 && (
-                    <div className="bg-medicore-primary text-white text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full shadow-lg">
+                    <div className="bg-mediBuddy-primary text-white text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full shadow-lg">
                       {chat.unread}
                     </div>
                   )}
@@ -101,7 +101,7 @@ export default function Messages() {
                 </div>
                 <div>
                   <h3 className="text-white font-bold">{activeChat.name}</h3>
-                  <p className="text-medicore-primary text-xs font-medium">{activeChat.online ? 'Online' : 'Offline'}</p>
+                  <p className="text-mediBuddy-primary text-xs font-medium">{activeChat.online ? 'Online' : 'Offline'}</p>
                 </div>
               </div>
               <div className="flex items-center gap-2">
@@ -118,14 +118,14 @@ export default function Messages() {
                   <div className={`max-w-[70%] group ${msg.sender === 'me' ? 'items-end' : 'items-start'}`}>
                     <div className={`p-4 rounded-3xl text-sm leading-relaxed ${
                       msg.sender === 'me' 
-                        ? 'bg-medicore-primary text-white rounded-tr-none shadow-lg' 
+                        ? 'bg-mediBuddy-primary text-white rounded-tr-none shadow-lg' 
                         : 'bg-white/5 border border-white/10 text-text-primary rounded-tl-none'
                     }`}>
                       {msg.text}
                     </div>
                     <div className={`flex items-center gap-2 mt-2 text-[10px] text-text-secondary ${msg.sender === 'me' ? 'justify-end' : 'justify-start'}`}>
                       {msg.time}
-                      {msg.sender === 'me' && <CheckCheck className="w-3 h-3 text-medicore-primary" />}
+                      {msg.sender === 'me' && <CheckCheck className="w-3 h-3 text-mediBuddy-primary" />}
                     </div>
                   </div>
                 </div>
@@ -144,7 +144,7 @@ export default function Messages() {
                   className="flex-1 bg-transparent border-none outline-none text-text-primary text-sm py-2"
                 />
                 <button type="button" className="text-text-secondary hover:text-white p-2 transition"><Smile className="w-5 h-5" /></button>
-                <button type="submit" className="bg-medicore-primary hover:bg-medicore-dark p-3 rounded-xl text-white shadow-lg transition-all active:scale-95">
+                <button type="submit" className="bg-mediBuddy-primary hover:bg-mediBuddy-dark p-3 rounded-xl text-white shadow-lg transition-all active:scale-95">
                   <Send className="w-5 h-5" />
                 </button>
               </form>

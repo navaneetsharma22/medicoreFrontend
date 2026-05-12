@@ -33,20 +33,20 @@ export default function Support() {
              <input 
               type="text" 
               placeholder="Search for articles, guides, or support topics..." 
-              className="w-full pl-16 pr-6 py-5 bg-white/5 border border-white/10 rounded-3xl text-text-primary placeholder:text-text-secondary outline-none focus:border-medicore-primary/50 shadow-2xl transition-all"
+              className="w-full pl-16 pr-6 py-5 bg-white/5 border border-white/10 rounded-3xl text-text-primary placeholder:text-text-secondary outline-none focus:border-mediBuddy-primary/50 shadow-2xl transition-all"
              />
           </div>
         </motion.div>
 
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
            {/* Quick Links */}
-           <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.1 }} className="glass-card rounded-3xl p-8 flex flex-col items-center text-center group cursor-pointer hover:bg-medicore-primary/5 transition-all border-medicore-primary/0 hover:border-medicore-primary/30">
-              <div className="w-16 h-16 bg-medicore-primary/10 rounded-2xl flex items-center justify-center text-medicore-primary mb-6 group-hover:scale-110 transition-transform">
+           <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.1 }} className="glass-card rounded-3xl p-8 flex flex-col items-center text-center group cursor-pointer hover:bg-mediBuddy-primary/5 transition-all border-mediBuddy-primary/0 hover:border-mediBuddy-primary/30">
+              <div className="w-16 h-16 bg-mediBuddy-primary/10 rounded-2xl flex items-center justify-center text-mediBuddy-primary mb-6 group-hover:scale-110 transition-transform">
                  <Book className="w-8 h-8" />
               </div>
               <h3 className="text-xl font-bold text-white mb-2">Documentation</h3>
-              <p className="text-text-secondary text-sm mb-6">In-depth guides on how to use every feature of MediCore.</p>
-              <button className="text-medicore-primary font-bold flex items-center gap-2 group-hover:gap-4 transition-all">
+              <p className="text-text-secondary text-sm mb-6">In-depth guides on how to use every feature of mediBuddy.</p>
+              <button className="text-mediBuddy-primary font-bold flex items-center gap-2 group-hover:gap-4 transition-all">
                  Read Docs <ArrowRight className="w-4 h-4" />
               </button>
            </motion.div>
@@ -86,7 +86,7 @@ export default function Support() {
               {faqs.map((faq, i) => (
                 <div key={i} className="p-6 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 transition-all cursor-pointer group">
                    <div className="flex items-center justify-between">
-                      <h4 className="text-white font-bold group-hover:text-medicore-primary transition-colors">{faq.q}</h4>
+                      <h4 className="text-white font-bold group-hover:text-mediBuddy-primary transition-colors">{faq.q}</h4>
                       <ChevronRight className="w-5 h-5 text-text-secondary" />
                    </div>
                 </div>

@@ -13,8 +13,8 @@ export default function PlaceholderPage({ title }) {
         animate={{ opacity: 1, scale: 1 }}
         className="flex-1 flex flex-col items-center justify-center text-center glass-card mt-8 p-12"
       >
-        <div className="bg-medicore-primary/10 p-6 rounded-full mb-6">
-          <Construction className="w-16 h-16 text-medicore-primary" />
+        <div className="bg-mediBuddy-primary/10 p-6 rounded-full mb-6">
+          <Construction className="w-16 h-16 text-mediBuddy-primary" />
         </div>
         <h2 className="text-3xl font-bold text-slate-800 mb-4">{title} Page</h2>
         <p className="text-slate-500 max-w-md mx-auto">

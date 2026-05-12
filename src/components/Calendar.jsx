@@ -53,13 +53,13 @@ export default function Calendar() {
                 onClick={() => setActiveDate(date)}
                 className={`w-8 h-8 mx-auto flex flex-col items-center justify-center rounded-full text-sm font-medium transition-all
                   ${isActive 
-                    ? 'bg-medicore-primary text-white shadow-[0_0_15px_rgba(47,158,143,0.4)]' 
+                    ? 'bg-mediBuddy-primary text-white shadow-[0_0_15px_rgba(47,158,143,0.4)]' 
                     : 'text-text-secondary hover:bg-[var(--border-subtle)] hover:scale-110'}
                 `}
               >
                 {date}
                 {hasEvent && !isActive && (
-                  <span className="w-1 h-1 bg-medicore-light rounded-full absolute bottom-1.5"></span>
+                  <span className="w-1 h-1 bg-mediBuddy-light rounded-full absolute bottom-1.5"></span>
                 )}
               </button>
             </div>

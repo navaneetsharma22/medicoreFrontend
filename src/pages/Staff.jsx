@@ -60,10 +60,10 @@ export default function Staff() {
                 <input 
                   type="text" 
                   placeholder="Search staff..." 
-                  className="pl-10 pr-4 py-2.5 bg-white/5 border border-white/10 rounded-2xl text-sm text-text-primary placeholder:text-text-secondary outline-none focus:border-medicore-primary/50"
+                  className="pl-10 pr-4 py-2.5 bg-white/5 border border-white/10 rounded-2xl text-sm text-text-primary placeholder:text-text-secondary outline-none focus:border-mediBuddy-primary/50"
                 />
              </div>
-             <button className="bg-medicore-primary hover:bg-medicore-dark text-white px-5 py-2.5 rounded-2xl font-bold shadow-lg transition flex items-center gap-2" onClick={() => setShowModal(true)}>
+             <button className="bg-mediBuddy-primary hover:bg-mediBuddy-dark text-white px-5 py-2.5 rounded-2xl font-bold shadow-lg transition flex items-center gap-2" onClick={() => setShowModal(true)}>
                 <Plus className="w-5 h-5" /> Add Member
              </button>
           </div>
@@ -93,8 +93,8 @@ export default function Staff() {
                       }`} />
                     </div>
                     <div>
-                      <h4 className="text-lg font-bold text-white group-hover:text-medicore-primary transition-colors">{member.name}</h4>
-                      <p className="text-medicore-primary text-xs font-bold uppercase tracking-wider">{member.role}</p>
+                      <h4 className="text-lg font-bold text-white group-hover:text-mediBuddy-primary transition-colors">{member.name}</h4>
+                      <p className="text-mediBuddy-primary text-xs font-bold uppercase tracking-wider">{member.role}</p>
                     </div>
                  </div>
 
@@ -115,7 +115,7 @@ export default function Staff() {
                           </div>
                        ))}
                     </div>
-                    <button className="text-xs font-bold text-medicore-primary hover:text-white transition-colors flex items-center gap-1.5">
+                    <button className="text-xs font-bold text-mediBuddy-primary hover:text-white transition-colors flex items-center gap-1.5">
                        View Schedule <CheckCircle className="w-3.5 h-3.5" />
                     </button>
                  </div>
@@ -137,13 +137,13 @@ export default function Staff() {
               </div>
 
               <form onSubmit={handleAddDoctor} className="space-y-4">
-                <input type="text" placeholder="Full Name" required className="w-full px-5 py-3 bg-white/5 border border-white/10 rounded-2xl text-text-primary outline-none focus:border-medicore-primary/50" value={newDoctor.name} onChange={e => setNewDoctor({...newDoctor, name: e.target.value})} />
-                <input type="text" placeholder="Role (e.g. Cardiologist)" required className="w-full px-5 py-3 bg-white/5 border border-white/10 rounded-2xl text-text-primary outline-none focus:border-medicore-primary/50" value={newDoctor.role} onChange={e => setNewDoctor({...newDoctor, role: e.target.value})} />
-                <input type="email" placeholder="Email Address" required className="w-full px-5 py-3 bg-white/5 border border-white/10 rounded-2xl text-text-primary outline-none focus:border-medicore-primary/50" value={newDoctor.email} onChange={e => setNewDoctor({...newDoctor, email: e.target.value})} />
-                <input type="tel" placeholder="Phone Number" required className="w-full px-5 py-3 bg-white/5 border border-white/10 rounded-2xl text-text-primary outline-none focus:border-medicore-primary/50" value={newDoctor.phone} onChange={e => setNewDoctor({...newDoctor, phone: e.target.value})} />
-                <input type="text" placeholder="Specialization" className="w-full px-5 py-3 bg-white/5 border border-white/10 rounded-2xl text-text-primary outline-none focus:border-medicore-primary/50" value={newDoctor.specialization} onChange={e => setNewDoctor({...newDoctor, specialization: e.target.value})} />
+                <input type="text" placeholder="Full Name" required className="w-full px-5 py-3 bg-white/5 border border-white/10 rounded-2xl text-text-primary outline-none focus:border-mediBuddy-primary/50" value={newDoctor.name} onChange={e => setNewDoctor({...newDoctor, name: e.target.value})} />
+                <input type="text" placeholder="Role (e.g. Cardiologist)" required className="w-full px-5 py-3 bg-white/5 border border-white/10 rounded-2xl text-text-primary outline-none focus:border-mediBuddy-primary/50" value={newDoctor.role} onChange={e => setNewDoctor({...newDoctor, role: e.target.value})} />
+                <input type="email" placeholder="Email Address" required className="w-full px-5 py-3 bg-white/5 border border-white/10 rounded-2xl text-text-primary outline-none focus:border-mediBuddy-primary/50" value={newDoctor.email} onChange={e => setNewDoctor({...newDoctor, email: e.target.value})} />
+                <input type="tel" placeholder="Phone Number" required className="w-full px-5 py-3 bg-white/5 border border-white/10 rounded-2xl text-text-primary outline-none focus:border-mediBuddy-primary/50" value={newDoctor.phone} onChange={e => setNewDoctor({...newDoctor, phone: e.target.value})} />
+                <input type="text" placeholder="Specialization" className="w-full px-5 py-3 bg-white/5 border border-white/10 rounded-2xl text-text-primary outline-none focus:border-mediBuddy-primary/50" value={newDoctor.specialization} onChange={e => setNewDoctor({...newDoctor, specialization: e.target.value})} />
                 
-                <button type="submit" className="w-full py-4 bg-medicore-primary hover:bg-medicore-dark text-white rounded-2xl font-bold transition-all shadow-lg mt-4">
+                <button type="submit" className="w-full py-4 bg-mediBuddy-primary hover:bg-mediBuddy-dark text-white rounded-2xl font-bold transition-all shadow-lg mt-4">
                   Confirm Registration
                 </button>
               </form>

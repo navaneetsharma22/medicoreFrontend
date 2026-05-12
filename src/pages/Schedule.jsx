@@ -67,13 +67,13 @@ export default function Schedule() {
                     onClick={() => setSelectedDate(day)}
                     className={`aspect-square rounded-2xl flex flex-col items-center justify-center relative transition-all duration-300 border ${
                       isSelected 
-                        ? 'bg-medicore-primary border-medicore-primary text-white shadow-[0_10px_30px_rgba(47,158,143,0.4)]' 
+                        ? 'bg-mediBuddy-primary border-mediBuddy-primary text-white shadow-[0_10px_30px_rgba(47,158,143,0.4)]' 
                         : 'bg-white/5 border-white/5 text-text-secondary hover:border-white/20'
                     }`}
                   >
                     <span className={`text-lg font-bold ${isSelected ? 'text-white' : 'text-text-primary'}`}>{day}</span>
                     {hasAppointments && !isSelected && (
-                      <div className="absolute bottom-3 w-1.5 h-1.5 bg-medicore-primary rounded-full shadow-[0_0_8px_rgba(47,158,143,1)]" />
+                      <div className="absolute bottom-3 w-1.5 h-1.5 bg-mediBuddy-primary rounded-full shadow-[0_0_8px_rgba(47,158,143,1)]" />
                     )}
                   </motion.button>
                 );
@@ -92,7 +92,7 @@ export default function Schedule() {
           <div className="glass-card rounded-3xl p-6 flex-1 flex flex-col">
             <div className="flex items-center justify-between mb-8">
               <h3 className="text-xl font-bold text-white">Daily Schedule</h3>
-              <button className="bg-medicore-primary/20 p-2 rounded-xl text-medicore-primary hover:bg-medicore-primary/30 transition">
+              <button className="bg-mediBuddy-primary/20 p-2 rounded-xl text-mediBuddy-primary hover:bg-mediBuddy-primary/30 transition">
                 <Plus className="w-5 h-5" />
               </button>
             </div>
@@ -112,7 +112,7 @@ export default function Schedule() {
                       <div className="flex items-center gap-3">
                         <img src={app.avatar} className="w-10 h-10 rounded-xl object-cover border border-white/10" alt="" />
                         <div>
-                          <h4 className="text-white font-bold text-sm group-hover:text-medicore-primary transition-colors">{app.patient}</h4>
+                          <h4 className="text-white font-bold text-sm group-hover:text-mediBuddy-primary transition-colors">{app.patient}</h4>
                           <p className="text-text-secondary text-xs">{app.type}</p>
                         </div>
                       </div>
@@ -142,7 +142,7 @@ export default function Schedule() {
             </div>
 
             <div className="mt-6 pt-6 border-t border-white/10">
-              <button className="w-full bg-medicore-primary hover:bg-medicore-dark text-white py-4 rounded-2xl font-bold transition-all shadow-[0_10px_30px_rgba(47,158,143,0.3)]">
+              <button className="w-full bg-mediBuddy-primary hover:bg-mediBuddy-dark text-white py-4 rounded-2xl font-bold transition-all shadow-[0_10px_30px_rgba(47,158,143,0.3)]">
                 View All Appointments
               </button>
             </div>

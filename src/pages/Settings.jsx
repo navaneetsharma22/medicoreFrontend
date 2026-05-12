@@ -31,7 +31,7 @@ export default function Settings() {
               key={tab.id}
               className={`flex items-center gap-3 px-6 py-4 rounded-2xl transition-all duration-300 ${
                 tab.active 
-                  ? 'bg-medicore-primary text-white shadow-lg' 
+                  ? 'bg-mediBuddy-primary text-white shadow-lg' 
                   : 'text-text-secondary hover:bg-white/5 hover:text-white'
               }`}
             >
@@ -54,7 +54,7 @@ export default function Settings() {
             <section>
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-xl font-bold text-white">Profile Information</h3>
-                <button className="text-medicore-primary hover:text-white transition flex items-center gap-2 text-sm font-bold">
+                <button className="text-mediBuddy-primary hover:text-white transition flex items-center gap-2 text-sm font-bold">
                   <RefreshCw className="w-4 h-4" /> Reset Changes
                 </button>
               </div>
@@ -70,7 +70,7 @@ export default function Settings() {
                   <h4 className="text-white font-bold text-lg">Hospital Administrator</h4>
                   <p className="text-text-secondary text-sm mb-4">Super Admin Access · New York, USA</p>
                   <div className="flex gap-3">
-                    <span className="bg-medicore-primary/10 text-medicore-primary px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider">Active</span>
+                    <span className="bg-mediBuddy-primary/10 text-mediBuddy-primary px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider">Active</span>
                     <span className="bg-blue-500/10 text-blue-400 px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider">Verified</span>
                   </div>
                 </div>
@@ -79,24 +79,24 @@ export default function Settings() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label className="text-xs font-bold text-text-secondary uppercase tracking-widest px-1">Full Name</label>
-                  <input type="text" defaultValue="Johnathan Doe" className="w-full px-5 py-3.5 bg-white/5 border border-white/10 rounded-2xl text-text-primary outline-none focus:border-medicore-primary/50 transition-all" />
+                  <input type="text" defaultValue="Johnathan Doe" className="w-full px-5 py-3.5 bg-white/5 border border-white/10 rounded-2xl text-text-primary outline-none focus:border-mediBuddy-primary/50 transition-all" />
                 </div>
                 <div className="space-y-2">
                   <label className="text-xs font-bold text-text-secondary uppercase tracking-widest px-1">Professional Title</label>
-                  <input type="text" defaultValue="Chief Medical Officer" className="w-full px-5 py-3.5 bg-white/5 border border-white/10 rounded-2xl text-text-primary outline-none focus:border-medicore-primary/50 transition-all" />
+                  <input type="text" defaultValue="Chief Medical Officer" className="w-full px-5 py-3.5 bg-white/5 border border-white/10 rounded-2xl text-text-primary outline-none focus:border-mediBuddy-primary/50 transition-all" />
                 </div>
                 <div className="space-y-2">
                   <label className="text-xs font-bold text-text-secondary uppercase tracking-widest px-1">Email Address</label>
                   <div className="relative">
                     <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-text-secondary" />
-                    <input type="email" defaultValue="admin@medicore.com" className="w-full pl-12 pr-5 py-3.5 bg-white/5 border border-white/10 rounded-2xl text-text-primary outline-none focus:border-medicore-primary/50 transition-all" />
+                    <input type="email" defaultValue="admin@mediBuddy.com" className="w-full pl-12 pr-5 py-3.5 bg-white/5 border border-white/10 rounded-2xl text-text-primary outline-none focus:border-mediBuddy-primary/50 transition-all" />
                   </div>
                 </div>
                 <div className="space-y-2">
                   <label className="text-xs font-bold text-text-secondary uppercase tracking-widest px-1">Phone Number</label>
                   <div className="relative">
                     <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-text-secondary" />
-                    <input type="tel" defaultValue="+1 (555) 000-1234" className="w-full pl-12 pr-5 py-3.5 bg-white/5 border border-white/10 rounded-2xl text-text-primary outline-none focus:border-medicore-primary/50 transition-all" />
+                    <input type="tel" defaultValue="+1 (555) 000-1234" className="w-full pl-12 pr-5 py-3.5 bg-white/5 border border-white/10 rounded-2xl text-text-primary outline-none focus:border-mediBuddy-primary/50 transition-all" />
                   </div>
                 </div>
               </div>
@@ -121,7 +121,7 @@ export default function Settings() {
                         <p className="text-text-secondary text-xs">{item.desc}</p>
                       </div>
                     </div>
-                    <button className={`w-12 h-6 rounded-full relative transition-all duration-300 ${item.active ? 'bg-medicore-primary' : 'bg-white/10'}`}>
+                    <button className={`w-12 h-6 rounded-full relative transition-all duration-300 ${item.active ? 'bg-mediBuddy-primary' : 'bg-white/10'}`}>
                       <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-all duration-300 ${item.active ? 'left-7' : 'left-1'}`} />
                     </button>
                   </div>
@@ -133,7 +133,7 @@ export default function Settings() {
                <button className="px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/10 text-white rounded-2xl font-bold transition-all">
                   Cancel
                </button>
-               <button className="px-10 py-4 bg-medicore-primary hover:bg-medicore-dark text-white rounded-2xl font-bold shadow-lg transition-all flex items-center gap-2">
+               <button className="px-10 py-4 bg-mediBuddy-primary hover:bg-mediBuddy-dark text-white rounded-2xl font-bold shadow-lg transition-all flex items-center gap-2">
                   <Save className="w-5 h-5" /> Save Changes
                </button>
             </div>

@@ -12,7 +12,7 @@ export default function ChartCard({ data }) {
     >
       <div className="flex justify-between items-center mb-6">
         <h3 className="text-xl font-bold text-text-primary tracking-tight">Revenue Trends</h3>
-        <select className="bg-[var(--card)] border border-[var(--border-subtle)] text-sm font-medium text-text-secondary rounded-xl px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-medicore-primary/50">
+        <select className="bg-[var(--card)] border border-[var(--border-subtle)] text-sm font-medium text-text-secondary rounded-xl px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-mediBuddy-primary/50">
           <option>This Week</option>
           <option>This Month</option>
           <option>This Year</option>

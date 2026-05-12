@@ -17,8 +17,8 @@ export default function StatCard({ title, value, trend, trendValue, icon: Icon, 
           <p className="text-text-secondary font-medium mb-1">{title}</p>
           <h4 className="text-3xl font-bold text-text-primary">{value}</h4>
         </div>
-        <div className="p-3 bg-medicore-primary/10 rounded-2xl">
-          <Icon className="w-6 h-6 text-medicore-primary" />
+        <div className="p-3 bg-mediBuddy-primary/10 rounded-2xl">
+          <Icon className="w-6 h-6 text-mediBuddy-primary" />
         </div>
       </div>
       

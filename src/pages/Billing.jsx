@@ -20,10 +20,10 @@ export default function Billing() {
       <Header />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-         <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="glass-card rounded-3xl p-6 bg-gradient-to-br from-medicore-primary/20 to-transparent">
+         <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="glass-card rounded-3xl p-6 bg-gradient-to-br from-mediBuddy-primary/20 to-transparent">
             <div className="flex items-center justify-between mb-4">
-               <div className="p-3 bg-medicore-primary/20 rounded-2xl text-medicore-primary"><DollarSign className="w-6 h-6" /></div>
-               <span className="text-[10px] font-bold text-medicore-primary uppercase tracking-widest bg-medicore-primary/10 px-2 py-1 rounded-lg">Revenue</span>
+               <div className="p-3 bg-mediBuddy-primary/20 rounded-2xl text-mediBuddy-primary"><DollarSign className="w-6 h-6" /></div>
+               <span className="text-[10px] font-bold text-mediBuddy-primary uppercase tracking-widest bg-mediBuddy-primary/10 px-2 py-1 rounded-lg">Revenue</span>
             </div>
             <h3 className="text-3xl font-bold text-white mb-1">$45,200.00</h3>
             <p className="text-text-secondary text-sm">Total earnings this month</p>
@@ -63,7 +63,7 @@ export default function Billing() {
              <button className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-text-primary text-sm hover:bg-white/10 transition">
                 <Filter className="w-4 h-4" /> Filter
              </button>
-             <button className="bg-medicore-primary hover:bg-medicore-dark text-white px-5 py-2 rounded-xl font-bold shadow-lg transition">
+             <button className="bg-mediBuddy-primary hover:bg-mediBuddy-dark text-white px-5 py-2 rounded-xl font-bold shadow-lg transition">
                 Export Data
              </button>
           </div>
@@ -97,7 +97,7 @@ export default function Billing() {
                       <td className="py-4 px-4 text-text-secondary text-sm">{tx.date}</td>
                       <td className="py-4 px-4">
                          <span className={`text-[10px] font-bold uppercase px-2 py-1 rounded-lg ${
-                            tx.status === 'paid' ? 'bg-medicore-primary/20 text-medicore-primary' :
+                            tx.status === 'paid' ? 'bg-mediBuddy-primary/20 text-mediBuddy-primary' :
                             tx.status === 'pending' ? 'bg-amber-500/20 text-amber-500' :
                             'bg-red-500/20 text-red-400'
                          }`}>

@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        medicore: {
+        mediBuddy: {
           primary: '#2F9E8F',
           light: '#3DB6A3',
           dark: '#1F7A6B',
@@ -18,6 +18,7 @@ export default {
         'fade-in': 'fadeIn 0.5s ease-out forwards',
         'slide-up': 'slideUp 0.5s ease-out forwards',
         'float': 'float 6s ease-in-out infinite',
+        'shimmer': 'shimmer 1.5s infinite',
       },
       keyframes: {
         fadeIn: {
@@ -31,6 +32,9 @@ export default {
         float: {
           '0%, 100%': { transform: 'translateY(0)' },
           '50%': { transform: 'translateY(-10px)' },
+        },
+        shimmer: {
+          '100%': { transform: 'translateX(100%)' },
         }
       }
     },

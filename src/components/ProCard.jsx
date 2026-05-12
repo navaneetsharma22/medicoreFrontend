@@ -18,7 +18,7 @@ export default function ProCard() {
         <h3 className="font-semibold text-white mb-1">Upgrade to Pro</h3>
         <p className="text-white/70 text-sm mb-4">Get advanced analytics & scheduling tools.</p>
         
-        <button onClick={() => alert('Upgrade modal opening...')} className="w-full bg-white text-medicore-dark font-medium py-2.5 rounded-xl transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,255,255,0.4)] hover:scale-[1.02] active:scale-95">
+        <button onClick={() => alert('Upgrade modal opening...')} className="w-full bg-white text-mediBuddy-dark font-medium py-2.5 rounded-xl transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,255,255,0.4)] hover:scale-[1.02] active:scale-95">
           Upgrade Now
         </button>
       </div>

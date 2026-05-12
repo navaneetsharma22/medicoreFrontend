@@ -25,9 +25,9 @@ function DashboardLayout() {
   const { sidebarCollapsed } = useUI();
   
   return (
-    <div className="min-h-screen flex relative overflow-hidden bg-medicore-bg">
-      <div className="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] bg-medicore-light/20 blur-[120px] rounded-full pointer-events-none z-0" />
-      <div className="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-medicore-primary/20 blur-[120px] rounded-full pointer-events-none z-0" />
+    <div className="min-h-screen flex relative overflow-hidden bg-mediBuddy-bg">
+      <div className="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] bg-mediBuddy-light/20 blur-[120px] rounded-full pointer-events-none z-0" />
+      <div className="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-mediBuddy-primary/20 blur-[120px] rounded-full pointer-events-none z-0" />
       <Sidebar />
       <main className={`flex-1 transition-all duration-300 p-4 lg:p-8 relative z-10 h-screen overflow-y-auto overflow-x-hidden ${
         sidebarCollapsed ? 'lg:ml-[88px]' : 'lg:ml-[280px]'
@@ -42,7 +42,7 @@ function DashboardLayout() {
 function App() {
   useEffect(() => {
     // --- Theme Setup ---
-    document.title = "MediCore - Healthcare Dashboard";
+    document.title = "mediBuddy - Healthcare Dashboard";
     if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
       document.documentElement.classList.add('dark');
     } else {
@@ -90,7 +90,9 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Auth />} />
+        <Route path="/signup" element={<Auth />} />
         <Route element={<DashboardLayout />}>
+
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/patients/:id?" element={<Patients />} />
           <Route path="/schedule" element={<Schedule />} />

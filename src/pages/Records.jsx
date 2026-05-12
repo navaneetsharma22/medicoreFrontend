@@ -16,7 +16,7 @@ const files = [
 
 const storageStats = [
   { label: 'Documents', size: '12.5 GB', color: 'bg-blue-500' },
-  { label: 'Images / MRI', size: '45.2 GB', color: 'bg-medicore-primary' },
+  { label: 'Images / MRI', size: '45.2 GB', color: 'bg-mediBuddy-primary' },
   { label: 'System Backup', size: '2.1 GB', color: 'bg-amber-500' },
 ];
 
@@ -39,7 +39,7 @@ export default function Records() {
             <div className="relative w-40 h-40 mx-auto mb-8">
                <svg className="w-full h-full transform -rotate-90">
                  <circle cx="80" cy="80" r="70" stroke="currentColor" strokeWidth="12" fill="transparent" className="text-white/5" />
-                 <circle cx="80" cy="80" r="70" stroke="currentColor" strokeWidth="12" fill="transparent" className="text-medicore-primary" strokeDasharray="440" strokeDashoffset="110" />
+                 <circle cx="80" cy="80" r="70" stroke="currentColor" strokeWidth="12" fill="transparent" className="text-mediBuddy-primary" strokeDasharray="440" strokeDashoffset="110" />
                </svg>
                <div className="absolute inset-0 flex flex-col items-center justify-center">
                  <span className="text-3xl font-bold text-white">75%</span>
@@ -66,8 +66,8 @@ export default function Records() {
             </button>
           </div>
 
-          <div className="glass-card rounded-3xl p-6 bg-medicore-primary/10 border-medicore-primary/20">
-            <Shield className="w-10 h-10 text-medicore-primary mb-4" />
+          <div className="glass-card rounded-3xl p-6 bg-mediBuddy-primary/10 border-mediBuddy-primary/20">
+            <Shield className="w-10 h-10 text-mediBuddy-primary mb-4" />
             <h4 className="text-white font-bold mb-2">End-to-End Encryption</h4>
             <p className="text-text-secondary text-xs leading-relaxed">All medical records are secured with AES-256 bank-grade encryption protocols.</p>
           </div>
@@ -89,17 +89,17 @@ export default function Records() {
                   <input 
                     type="text" 
                     placeholder="Search files..." 
-                    className="pl-10 pr-4 py-2 bg-white/5 border border-white/10 rounded-xl text-sm text-text-primary placeholder:text-text-secondary outline-none focus:border-medicore-primary/50"
+                    className="pl-10 pr-4 py-2 bg-white/5 border border-white/10 rounded-xl text-sm text-text-primary placeholder:text-text-secondary outline-none focus:border-mediBuddy-primary/50"
                   />
                 </div>
-                <button className="bg-medicore-primary hover:bg-medicore-dark text-white p-2.5 rounded-xl shadow-lg transition">
+                <button className="bg-mediBuddy-primary hover:bg-mediBuddy-dark text-white p-2.5 rounded-xl shadow-lg transition">
                   <Plus className="w-5 h-5" />
                 </button>
               </div>
             </div>
 
             <div className="flex items-center gap-4 mb-8 border-b border-white/10 pb-4">
-              <button className="text-sm font-bold text-medicore-primary border-b-2 border-medicore-primary pb-4">All Files</button>
+              <button className="text-sm font-bold text-mediBuddy-primary border-b-2 border-mediBuddy-primary pb-4">All Files</button>
               <button className="text-sm font-bold text-text-secondary hover:text-white pb-4 transition">Recent</button>
               <button className="text-sm font-bold text-text-secondary hover:text-white pb-4 transition">Starred</button>
               <button className="text-sm font-bold text-text-secondary hover:text-white pb-4 transition">Shared</button>
@@ -126,7 +126,7 @@ export default function Records() {
                           <button className="p-1.5 hover:bg-white/10 rounded-lg text-text-secondary hover:text-white"><MoreHorizontal className="w-4 h-4" /></button>
                         </div>
                       </div>
-                      <h4 className="text-white font-bold text-sm truncate mb-1 group-hover:text-medicore-primary transition-colors">{file.name}</h4>
+                      <h4 className="text-white font-bold text-sm truncate mb-1 group-hover:text-mediBuddy-primary transition-colors">{file.name}</h4>
                       <div className="flex items-center justify-between">
                         <span className="text-[10px] text-text-secondary font-bold uppercase tracking-wider">{file.size}</span>
                         <span className="text-[10px] text-text-secondary font-medium">{file.date}</span>
@@ -137,9 +137,9 @@ export default function Records() {
               </div>
             </div>
 
-            <div className="mt-8 p-4 bg-white/5 rounded-2xl border border-dashed border-white/20 flex flex-col items-center justify-center py-10 group cursor-pointer hover:border-medicore-primary/50 transition-all">
-               <div className="w-12 h-12 bg-medicore-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                  <Cloud className="w-6 h-6 text-medicore-primary" />
+            <div className="mt-8 p-4 bg-white/5 rounded-2xl border border-dashed border-white/20 flex flex-col items-center justify-center py-10 group cursor-pointer hover:border-mediBuddy-primary/50 transition-all">
+               <div className="w-12 h-12 bg-mediBuddy-primary/10 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                  <Cloud className="w-6 h-6 text-mediBuddy-primary" />
                </div>
                <p className="text-white font-bold text-sm mb-1">Drag and drop files to upload</p>
                <p className="text-text-secondary text-xs">Maximum file size: 2GB</p>

@@ -26,7 +26,7 @@ export default function Analytics() {
       <div className="max-w-[1400px] mx-auto h-full flex flex-col gap-6">
         <Header />
         <div className="flex-1 flex items-center justify-center">
-          <div className="w-10 h-10 border-4 border-medicore-primary border-t-transparent rounded-full animate-spin"></div>
+          <div className="w-10 h-10 border-4 border-mediBuddy-primary border-t-transparent rounded-full animate-spin"></div>
         </div>
       </div>
     );
@@ -46,7 +46,7 @@ export default function Analytics() {
   const { stats, chartData, patientDistribution } = analyticsData;
 
   const statItems = [
-    { label: 'Total Patients', value: stats.totalPatients.value, change: stats.totalPatients.change, icon: Users, color: 'text-medicore-primary', trend: stats.totalPatients.trend },
+    { label: 'Total Patients', value: stats.totalPatients.value, change: stats.totalPatients.change, icon: Users, color: 'text-mediBuddy-primary', trend: stats.totalPatients.trend },
     { label: 'Revenue', value: stats.monthlyRevenue.value, change: stats.monthlyRevenue.change, icon: TrendingUp, color: 'text-blue-400', trend: stats.monthlyRevenue.trend },
     { label: 'Avg. Treatment', value: stats.avgTreatment.value, change: stats.avgTreatment.change, icon: Activity, color: 'text-amber-400', trend: stats.avgTreatment.trend },
     { label: 'Appointments', value: stats.appointments.value, change: stats.appointments.change, icon: CalendarIcon, color: 'text-purple-400', trend: stats.appointments.trend },
@@ -67,7 +67,7 @@ export default function Analytics() {
             <select 
               value={timeRange}
               onChange={(e) => setTimeRange(e.target.value)}
-              className="appearance-none bg-white/5 border border-white/10 rounded-xl px-4 py-2 pr-10 text-sm font-medium text-text-primary outline-none focus:border-medicore-primary/50 transition-all cursor-pointer"
+              className="appearance-none bg-white/5 border border-white/10 rounded-xl px-4 py-2 pr-10 text-sm font-medium text-text-primary outline-none focus:border-mediBuddy-primary/50 transition-all cursor-pointer"
             >
               <option value="7d" className="bg-[#1e293b]">Last 7 Days</option>
               <option value="30d" className="bg-[#1e293b]">Last 30 Days</option>
@@ -122,7 +122,7 @@ export default function Analytics() {
             </div>
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-medicore-primary" />
+                <div className="w-3 h-3 rounded-full bg-mediBuddy-primary" />
                 <span className="text-xs text-text-secondary">Revenue</span>
               </div>
               <div className="flex items-center gap-2">

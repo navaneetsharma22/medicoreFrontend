@@ -61,7 +61,7 @@ export default function PatientsTable({ searchTerm, kycFilter, dateFilter }) {
   if (loading) {
     return (
       <div className="glass-card flex items-center justify-center py-20">
-        <div className="w-8 h-8 border-4 border-medicore-primary border-t-transparent rounded-full animate-spin"></div>
+        <div className="w-8 h-8 border-4 border-mediBuddy-primary border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
   }
@@ -98,7 +98,7 @@ export default function PatientsTable({ searchTerm, kycFilter, dateFilter }) {
                     <div className="flex items-center justify-center gap-3">
                       <button 
                         onClick={() => navigate(`/patients/${patient.id}`)}
-                        className="p-1.5 text-text-secondary hover:text-medicore-primary hover:bg-medicore-primary/10 rounded-lg transition-colors" 
+                        className="p-1.5 text-text-secondary hover:text-mediBuddy-primary hover:bg-mediBuddy-primary/10 rounded-lg transition-colors" 
                         title="View Patient"
                       >
                         <Eye className="w-4 h-4" />
@@ -150,7 +150,7 @@ export default function PatientsTable({ searchTerm, kycFilter, dateFilter }) {
                   onClick={() => handlePageChange(i + 1)}
                   className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${
                     currentPage === i + 1 
-                      ? 'bg-medicore-primary text-white' 
+                      ? 'bg-mediBuddy-primary text-white' 
                       : 'hover:bg-white/10 hover:text-text-primary'
                   }`}
                 >

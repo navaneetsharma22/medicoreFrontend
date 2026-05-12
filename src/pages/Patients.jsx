@@ -92,8 +92,8 @@ function AddPatientModal({ onClose }) {
 
         {submitted ? (
           <motion.div initial={{ scale: 0.8 }} animate={{ scale: 1 }} className="text-center py-10">
-            <div className="w-16 h-16 bg-medicore-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-              <CheckCircle className="w-8 h-8 text-medicore-primary" />
+            <div className="w-16 h-16 bg-mediBuddy-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
+              <CheckCircle className="w-8 h-8 text-mediBuddy-primary" />
             </div>
             <h3 className="text-lg font-bold text-white">Patient Added!</h3>
             <p className="text-text-secondary text-sm mt-1">The records have been updated.</p>
@@ -110,7 +110,7 @@ function AddPatientModal({ onClose }) {
                   type="text" 
                   placeholder="John Doe"
                   className={`w-full pl-10 pr-4 py-2.5 bg-white/5 border rounded-xl text-text-primary placeholder:text-text-secondary outline-none transition-all ${
-                    errors.name ? 'border-red-400/50 focus:border-red-400' : 'border-white/10 focus:border-medicore-primary/50'
+                    errors.name ? 'border-red-400/50 focus:border-red-400' : 'border-white/10 focus:border-mediBuddy-primary/50'
                   }`}
                 />
               </div>
@@ -126,7 +126,7 @@ function AddPatientModal({ onClose }) {
                   type="number" 
                   placeholder="25"
                   className={`w-full px-4 py-2.5 bg-white/5 border rounded-xl text-text-primary placeholder:text-text-secondary outline-none transition-all ${
-                    errors.age ? 'border-red-400/50 focus:border-red-400' : 'border-white/10 focus:border-medicore-primary/50'
+                    errors.age ? 'border-red-400/50 focus:border-red-400' : 'border-white/10 focus:border-mediBuddy-primary/50'
                   }`}
                 />
                 {errors.age && <p className="text-xs text-red-400 font-medium pl-1">{errors.age.message}</p>}
@@ -139,7 +139,7 @@ function AddPatientModal({ onClose }) {
                   <select 
                     {...register('gender')}
                     className={`w-full px-4 py-2.5 bg-white/5 border rounded-xl text-text-primary outline-none transition-all appearance-none cursor-pointer ${
-                      errors.gender ? 'border-red-400/50 focus:border-red-400' : 'border-white/10 focus:border-medicore-primary/50'
+                      errors.gender ? 'border-red-400/50 focus:border-red-400' : 'border-white/10 focus:border-mediBuddy-primary/50'
                     }`}
                   >
                     <option value="" className="bg-[#1e293b]">Select Gender</option>
@@ -163,7 +163,7 @@ function AddPatientModal({ onClose }) {
                   type="tel" 
                   placeholder="+1 (555) 000-0000"
                   className={`w-full pl-10 pr-4 py-2.5 bg-white/5 border rounded-xl text-text-primary placeholder:text-text-secondary outline-none transition-all ${
-                    errors.contact ? 'border-red-400/50 focus:border-red-400' : 'border-white/10 focus:border-medicore-primary/50'
+                    errors.contact ? 'border-red-400/50 focus:border-red-400' : 'border-white/10 focus:border-mediBuddy-primary/50'
                   }`}
                 />
               </div>
@@ -180,7 +180,7 @@ function AddPatientModal({ onClose }) {
                   type="email" 
                   placeholder="john@example.com"
                   className={`w-full pl-10 pr-4 py-2.5 bg-white/5 border rounded-xl text-text-primary placeholder:text-text-secondary outline-none transition-all ${
-                    errors.email ? 'border-red-400/50 focus:border-red-400' : 'border-white/10 focus:border-medicore-primary/50'
+                    errors.email ? 'border-red-400/50 focus:border-red-400' : 'border-white/10 focus:border-mediBuddy-primary/50'
                   }`}
                 />
               </div>
@@ -190,7 +190,7 @@ function AddPatientModal({ onClose }) {
             <button 
               type="submit" 
               disabled={addPatientMutation.isPending} 
-              className="w-full flex items-center justify-center gap-2 bg-medicore-primary hover:bg-medicore-dark text-white px-5 py-3 rounded-xl font-medium transition-all shadow-[0_8px_20px_rgba(47,158,143,0.3)] hover:shadow-[0_8px_25px_rgba(47,158,143,0.4)] disabled:opacity-50 mt-2"
+              className="w-full flex items-center justify-center gap-2 bg-mediBuddy-primary hover:bg-mediBuddy-dark text-white px-5 py-3 rounded-xl font-medium transition-all shadow-[0_8px_20px_rgba(47,158,143,0.3)] hover:shadow-[0_8px_25px_rgba(47,158,143,0.4)] disabled:opacity-50 mt-2"
             >
               {addPatientMutation.isPending ? (
                 <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
@@ -239,8 +239,8 @@ function AppointmentModal({ patient, onClose }) {
 
         {submitted ? (
           <motion.div initial={{ scale: 0.8 }} animate={{ scale: 1 }} className="text-center py-10">
-            <div className="w-16 h-16 bg-medicore-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-              <CheckCircle className="w-8 h-8 text-medicore-primary" />
+            <div className="w-16 h-16 bg-mediBuddy-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
+              <CheckCircle className="w-8 h-8 text-mediBuddy-primary" />
             </div>
             <h3 className="text-lg font-bold text-white">Appointment Created!</h3>
             <p className="text-text-secondary text-sm mt-1">Successfully scheduled for {form.date} at {form.time}</p>
@@ -250,7 +250,7 @@ function AppointmentModal({ patient, onClose }) {
             <div>
               <label className="block text-sm font-medium text-text-primary mb-1.5">Appointment Type</label>
               <select name="type" value={form.type} onChange={handleChange} required
-                className="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-text-primary outline-none focus:border-medicore-primary/50 transition-all appearance-none cursor-pointer">
+                className="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-text-primary outline-none focus:border-mediBuddy-primary/50 transition-all appearance-none cursor-pointer">
                 <option value="Consultation" className="bg-[#1e293b]">Consultation</option>
                 <option value="Follow-up" className="bg-[#1e293b]">Follow-up</option>
                 <option value="Checkup" className="bg-[#1e293b]">Checkup</option>
@@ -263,25 +263,25 @@ function AppointmentModal({ patient, onClose }) {
               <div>
                 <label className="block text-sm font-medium text-text-primary mb-1.5">Date</label>
                 <input type="date" name="date" value={form.date} onChange={handleChange} required
-                  className="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-text-primary outline-none focus:border-medicore-primary/50 transition-all [color-scheme:dark]" />
+                  className="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-text-primary outline-none focus:border-mediBuddy-primary/50 transition-all [color-scheme:dark]" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-text-primary mb-1.5">Time</label>
                 <input type="time" name="time" value={form.time} onChange={handleChange} required
-                  className="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-text-primary outline-none focus:border-medicore-primary/50 transition-all [color-scheme:dark]" />
+                  className="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-text-primary outline-none focus:border-mediBuddy-primary/50 transition-all [color-scheme:dark]" />
               </div>
             </div>
             <div>
               <label className="block text-sm font-medium text-text-primary mb-1.5">Doctor</label>
               <input type="text" name="doctor" value={form.doctor} onChange={handleChange} placeholder="e.g. Dr. Sarah L." required
-                className="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-text-primary placeholder:text-text-secondary outline-none focus:border-medicore-primary/50 transition-all" />
+                className="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-text-primary placeholder:text-text-secondary outline-none focus:border-mediBuddy-primary/50 transition-all" />
             </div>
             <div>
               <label className="block text-sm font-medium text-text-primary mb-1.5">Notes (optional)</label>
               <textarea name="notes" value={form.notes} onChange={handleChange} rows={2} placeholder="Additional notes..."
-                className="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-text-primary placeholder:text-text-secondary outline-none focus:border-medicore-primary/50 transition-all resize-none" />
+                className="w-full px-4 py-2.5 bg-white/5 border border-white/10 rounded-xl text-text-primary placeholder:text-text-secondary outline-none focus:border-mediBuddy-primary/50 transition-all resize-none" />
             </div>
-            <button type="submit" className="w-full flex items-center justify-center gap-2 bg-medicore-primary hover:bg-medicore-dark text-white px-5 py-3 rounded-xl font-medium transition-all shadow-[0_8px_20px_rgba(47,158,143,0.3)] hover:shadow-[0_8px_25px_rgba(47,158,143,0.4)]">
+            <button type="submit" className="w-full flex items-center justify-center gap-2 bg-mediBuddy-primary hover:bg-mediBuddy-dark text-white px-5 py-3 rounded-xl font-medium transition-all shadow-[0_8px_20px_rgba(47,158,143,0.3)] hover:shadow-[0_8px_25px_rgba(47,158,143,0.4)]">
               <Plus className="w-5 h-5" />
               Schedule Appointment
             </button>
@@ -315,7 +315,7 @@ function InfoTab({ patient }) {
         return (
           <motion.div key={i} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.04 }}
             className="bg-white/5 border border-white/10 rounded-xl p-4 flex items-center gap-4 hover:bg-white/10 transition-colors">
-            <div className="p-2.5 bg-medicore-primary/10 rounded-lg text-medicore-primary flex-shrink-0">
+            <div className="p-2.5 bg-mediBuddy-primary/10 rounded-lg text-mediBuddy-primary flex-shrink-0">
               <Icon className="w-4 h-4" />
             </div>
             <div className="min-w-0">
@@ -347,7 +347,7 @@ function AppointmentsTab({ patient }) {
           <motion.div key={item.id} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.05 }}
             className="bg-white/5 border border-white/10 rounded-xl p-4 flex items-center justify-between hover:bg-white/10 transition-all group">
             <div className="flex items-center gap-4">
-              <div className={`p-3 rounded-xl ${item.status === 'upcoming' ? 'bg-medicore-primary/20 text-medicore-primary' : 'bg-white/5 text-text-secondary'}`}>
+              <div className={`p-3 rounded-xl ${item.status === 'upcoming' ? 'bg-mediBuddy-primary/20 text-mediBuddy-primary' : 'bg-white/5 text-text-secondary'}`}>
                 <Calendar className="w-5 h-5" />
               </div>
               <div>
@@ -360,7 +360,7 @@ function AppointmentsTab({ patient }) {
               </div>
             </div>
             <span className={`text-xs px-2.5 py-1 rounded-md font-medium capitalize ${
-              item.status === 'upcoming' ? 'bg-medicore-primary/20 text-medicore-primary' : 'bg-white/10 text-text-secondary'
+              item.status === 'upcoming' ? 'bg-mediBuddy-primary/20 text-mediBuddy-primary' : 'bg-white/10 text-text-secondary'
             }`}>{item.status}</span>
           </motion.div>
         ))
@@ -395,11 +395,11 @@ function TestsTab({ patient }) {
             </div>
             <div>
               <p className="text-white font-medium">{test.name}</p>
-              <p className="text-text-secondary text-xs">{test.date} · Result: <span className={test.result === 'Normal' || test.result === 'Clear' ? 'text-medicore-primary' : 'text-text-primary'}>{test.result}</span></p>
+              <p className="text-text-secondary text-xs">{test.date} · Result: <span className={test.result === 'Normal' || test.result === 'Clear' ? 'text-mediBuddy-primary' : 'text-text-primary'}>{test.result}</span></p>
             </div>
           </div>
           <span className={`text-xs px-2.5 py-1 rounded-md font-medium border ${
-            test.status === 'completed' ? 'bg-medicore-primary/20 text-medicore-primary border-medicore-primary/20' : 'bg-yellow-400/20 text-yellow-400 border-yellow-400/20'
+            test.status === 'completed' ? 'bg-mediBuddy-primary/20 text-mediBuddy-primary border-mediBuddy-primary/20' : 'bg-yellow-400/20 text-yellow-400 border-yellow-400/20'
           }`}>{test.status === 'completed' ? 'Completed' : 'Scheduled'}</span>
         </motion.div>
       ))}
@@ -452,7 +452,7 @@ function HistoryTab({ patient }) {
           <p className="text-sm text-text-secondary">{item.notes}</p>
           <div className="mt-3">
             <span className={`text-xs px-2.5 py-1 rounded-md font-medium ${
-              item.status === 'completed' ? 'bg-medicore-primary/20 text-medicore-primary border border-medicore-primary/20' :
+              item.status === 'completed' ? 'bg-mediBuddy-primary/20 text-mediBuddy-primary border border-mediBuddy-primary/20' :
               item.status === 'scheduled' ? 'bg-blue-400/20 text-blue-400 border border-blue-400/20' :
               'bg-yellow-400/20 text-yellow-400 border border-yellow-400/20'
             }`}>{item.status === 'completed' ? 'Completed' : item.status === 'scheduled' ? 'Scheduled' : 'Pending'}</span>
@@ -472,7 +472,7 @@ function KYCTab({ patient }) {
         <motion.div key={doc.id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.06 }}
           className="bg-white/5 border border-white/10 rounded-xl p-5 hover:bg-white/10 transition-colors flex items-center justify-between gap-4">
           <div className="flex items-center gap-4 min-w-0">
-            <div className={`p-2.5 rounded-lg flex-shrink-0 ${doc.status === 'verified' ? 'bg-medicore-primary/10 text-medicore-primary' : 'bg-yellow-400/10 text-yellow-400'}`}>
+            <div className={`p-2.5 rounded-lg flex-shrink-0 ${doc.status === 'verified' ? 'bg-mediBuddy-primary/10 text-mediBuddy-primary' : 'bg-yellow-400/10 text-yellow-400'}`}>
               <FileText className="w-5 h-5" />
             </div>
             <div className="min-w-0">
@@ -482,10 +482,10 @@ function KYCTab({ patient }) {
           </div>
           <div className="flex items-center gap-3 flex-shrink-0">
             <span className={`text-xs px-2.5 py-1 rounded-md font-medium border ${
-              doc.status === 'verified' ? 'bg-medicore-primary/20 text-medicore-primary border-medicore-primary/20' : 'bg-yellow-400/20 text-yellow-400 border-yellow-400/20'
+              doc.status === 'verified' ? 'bg-mediBuddy-primary/20 text-mediBuddy-primary border-mediBuddy-primary/20' : 'bg-yellow-400/20 text-yellow-400 border-yellow-400/20'
             }`}>{doc.status === 'verified' ? 'Verified' : 'Pending'}</span>
             {doc.status === 'pending' && (
-              <button className="p-2 hover:bg-medicore-primary/10 rounded-lg transition text-medicore-primary" title="Upload document">
+              <button className="p-2 hover:bg-mediBuddy-primary/10 rounded-lg transition text-mediBuddy-primary" title="Upload document">
                 <Upload className="w-4 h-4" />
               </button>
             )}
@@ -535,7 +535,7 @@ function RecordsTab({ patient }) {
           <h3 className="text-lg font-bold text-white">Medical Records</h3>
           <p className="text-text-secondary text-xs">Manage and view patient documents.</p>
         </div>
-        <label className="cursor-pointer bg-medicore-primary hover:bg-medicore-dark text-white px-4 py-2 rounded-xl text-sm font-medium transition-all flex items-center gap-2 shadow-lg hover:-translate-y-0.5">
+        <label className="cursor-pointer bg-mediBuddy-primary hover:bg-mediBuddy-dark text-white px-4 py-2 rounded-xl text-sm font-medium transition-all flex items-center gap-2 shadow-lg hover:-translate-y-0.5">
           {uploadMutation.isPending ? (
             <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
           ) : (
@@ -560,7 +560,7 @@ function RecordsTab({ patient }) {
               <motion.div key={rec.id || i} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
                 className="bg-white/5 border border-white/10 rounded-xl p-4 hover:bg-white/10 transition-colors flex items-center justify-between gap-4">
                 <div className="flex items-center gap-4 min-w-0">
-                  <div className="p-2.5 bg-medicore-primary/10 rounded-lg text-medicore-primary flex-shrink-0">
+                  <div className="p-2.5 bg-mediBuddy-primary/10 rounded-lg text-mediBuddy-primary flex-shrink-0">
                     <Icon className="w-4 h-4" />
                   </div>
                   <div className="min-w-0">
@@ -587,7 +587,7 @@ function RecordsTab({ patient }) {
                     href={rec.url} 
                     download
                     target="_blank"
-                    className="p-2 hover:bg-medicore-primary/10 rounded-lg transition text-text-secondary hover:text-medicore-primary" title="Download">
+                    className="p-2 hover:bg-mediBuddy-primary/10 rounded-lg transition text-text-secondary hover:text-mediBuddy-primary" title="Download">
                     <Download className="w-4 h-4" />
                   </a>
                 </div>
@@ -682,7 +682,7 @@ export default function Patients() {
             placeholder="Search patient by ID (e.g. 1, 2, 3)..." 
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 bg-white/5 border border-white/10 rounded-xl text-text-primary placeholder:text-text-secondary outline-none focus:border-medicore-primary/50 transition-all"
+            className="w-full pl-10 pr-4 py-2 bg-white/5 border border-white/10 rounded-xl text-text-primary placeholder:text-text-secondary outline-none focus:border-mediBuddy-primary/50 transition-all"
           />
         </form>
         <div className="flex gap-3 w-full md:w-auto">
@@ -704,7 +704,7 @@ export default function Patients() {
 
           <button 
             onClick={() => setShowAppointmentModal(true)}
-            className="flex-1 md:flex-none flex items-center justify-center gap-2 bg-medicore-primary hover:bg-medicore-dark text-white px-5 py-2.5 rounded-xl font-medium transition-all shadow-[0_8px_20px_rgba(47,158,143,0.3)]"
+            className="flex-1 md:flex-none flex items-center justify-center gap-2 bg-mediBuddy-primary hover:bg-mediBuddy-dark text-white px-5 py-2.5 rounded-xl font-medium transition-all shadow-[0_8px_20px_rgba(47,158,143,0.3)]"
           >
             <Calendar className="w-5 h-5" />
             Create Appointment
@@ -746,7 +746,7 @@ export default function Patients() {
                 </button>
                 <div className="flex items-center gap-4">
                   <div className="relative">
-                    <img src={patient?.avatar || `https://api.dicebear.com/7.x/initials/svg?seed=${patient?.name || 'U'}`} alt="Avatar" className="w-20 h-20 rounded-full object-cover border-2 border-medicore-primary" />
+                    <img src={patient?.avatar || `https://api.dicebear.com/7.x/initials/svg?seed=${patient?.name || 'U'}`} alt="Avatar" className="w-20 h-20 rounded-full object-cover border-2 border-mediBuddy-primary" />
                     <div className="absolute bottom-0 right-0 w-5 h-5 bg-green-500 border-2 border-[#1e293b] rounded-full"></div>
                   </div>
                   <div>
@@ -770,7 +770,7 @@ export default function Patients() {
                 </div>
                 <button 
                   onClick={handleExportPDF}
-                  className="ml-2 p-3 bg-medicore-primary/10 hover:bg-medicore-primary/20 text-medicore-primary rounded-xl transition-all group"
+                  className="ml-2 p-3 bg-mediBuddy-primary/10 hover:bg-mediBuddy-primary/20 text-mediBuddy-primary rounded-xl transition-all group"
                   title="Download Patient Report PDF"
                 >
                   <FileText className="w-5 h-5 group-hover:scale-110 transition-transform" />
@@ -786,7 +786,7 @@ export default function Patients() {
             {tabs.map((tab) => (
               <button key={tab} onClick={() => setActiveTab(tab)}
                 className={`px-6 py-2.5 rounded-lg font-medium transition-all whitespace-nowrap ${
-                  activeTab === tab ? 'bg-medicore-primary text-white shadow-[0_4px_15px_rgba(47,158,143,0.3)]' : 'text-text-secondary hover:text-white hover:bg-white/5'
+                  activeTab === tab ? 'bg-mediBuddy-primary text-white shadow-[0_4px_15px_rgba(47,158,143,0.3)]' : 'text-text-secondary hover:text-white hover:bg-white/5'
                 }`}>
                 {tab}
               </button>
@@ -800,11 +800,11 @@ export default function Patients() {
             <motion.div initial={{ x: -20, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: 0.2 }} className="lg:w-1/3 flex flex-col gap-6">
               <div className="glass-card rounded-2xl p-6 h-full flex flex-col">
                 <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
-                  <ShieldCheck className="w-5 h-5 text-medicore-primary" />
+                  <ShieldCheck className="w-5 h-5 text-mediBuddy-primary" />
                   KYC Summary
                 </h3>
                 <div className="grid grid-cols-2 gap-4 mb-8">
-                  <button onClick={() => setActiveTab('KYC')} className="bg-white/5 border border-white/10 rounded-xl p-4 transition-colors hover:bg-white/10 text-left hover:border-medicore-primary/30">
+                  <button onClick={() => setActiveTab('KYC')} className="bg-white/5 border border-white/10 rounded-xl p-4 transition-colors hover:bg-white/10 text-left hover:border-mediBuddy-primary/30">
                     <p className="text-text-secondary text-sm mb-1">Total</p>
                     <p className="text-2xl font-bold text-white">{patient?.kyc?.total || 0}</p>
                   </button>
@@ -812,27 +812,27 @@ export default function Patients() {
                     <p className="text-text-secondary text-sm mb-1">Pending</p>
                     <p className="text-2xl font-bold text-yellow-400">{patient?.kyc?.pending || 0}</p>
                   </button>
-                  <button onClick={() => setActiveTab('KYC')} className="bg-white/5 border border-white/10 rounded-xl p-4 col-span-2 transition-colors hover:bg-white/10 relative overflow-hidden group text-left hover:border-medicore-primary/30 border border-white/10">
-                    <div className="absolute inset-0 bg-medicore-primary/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <button onClick={() => setActiveTab('KYC')} className="bg-white/5 border border-white/10 rounded-xl p-4 col-span-2 transition-colors hover:bg-white/10 relative overflow-hidden group text-left hover:border-mediBuddy-primary/30 border border-white/10">
+                    <div className="absolute inset-0 bg-mediBuddy-primary/5 opacity-0 group-hover:opacity-100 transition-opacity" />
                     <p className="text-text-secondary text-sm mb-1 relative z-10">Completed</p>
                     <div className="flex items-end justify-between relative z-10">
-                      <p className="text-3xl font-bold text-medicore-primary">{patient?.kyc?.completed || 0}</p>
-                      <CheckCircle className="w-6 h-6 text-medicore-primary" />
+                      <p className="text-3xl font-bold text-mediBuddy-primary">{patient?.kyc?.completed || 0}</p>
+                      <CheckCircle className="w-6 h-6 text-mediBuddy-primary" />
                     </div>
                   </button>
                 </div>
 
                 <div className="space-y-4 border-t border-white/10 pt-6 mt-auto">
                   <div className="flex items-center gap-3 text-sm text-text-secondary">
-                    <div className="p-2 bg-white/5 rounded-lg text-medicore-primary"><Phone className="w-4 h-4" /></div>
+                    <div className="p-2 bg-white/5 rounded-lg text-mediBuddy-primary"><Phone className="w-4 h-4" /></div>
                     {patient?.phone || 'No phone number'}
                   </div>
                   <div className="flex items-center gap-3 text-sm text-text-secondary">
-                    <div className="p-2 bg-white/5 rounded-lg text-medicore-primary"><MapPin className="w-4 h-4" /></div>
+                    <div className="p-2 bg-white/5 rounded-lg text-mediBuddy-primary"><MapPin className="w-4 h-4" /></div>
                     {patient?.address || 'No address'}
                   </div>
                   <div className="flex items-center gap-3 text-sm text-text-secondary">
-                    <div className="p-2 bg-white/5 rounded-lg text-medicore-primary"><Calendar className="w-4 h-4" /></div>
+                    <div className="p-2 bg-white/5 rounded-lg text-mediBuddy-primary"><Calendar className="w-4 h-4" /></div>
                     DOB: {patient?.dob || 'N/A'}
                   </div>
                 </div>
@@ -855,22 +855,22 @@ export default function Patients() {
               <div className="glass-card rounded-2xl p-6">
                 <div className="flex justify-between items-center mb-6">
                   <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                    <Activity className="w-5 h-5 text-medicore-primary" />
+                    <Activity className="w-5 h-5 text-mediBuddy-primary" />
                     Activity Timeline
                   </h3>
                   {timelineItems.length > TIMELINE_PREVIEW_COUNT && (
-                    <button onClick={() => setShowAllTimeline(!showAllTimeline)} className="text-sm text-medicore-primary hover:text-white transition-colors flex items-center gap-1">
+                    <button onClick={() => setShowAllTimeline(!showAllTimeline)} className="text-sm text-mediBuddy-primary hover:text-white transition-colors flex items-center gap-1">
                       {showAllTimeline ? <><ChevronUp className="w-4 h-4" /> Show Less</> : <><ChevronDown className="w-4 h-4" /> View All ({timelineItems.length})</>}
                     </button>
                   )}
                 </div>
                 <div className="relative">
-                  <div className="absolute left-3.5 top-2 bottom-2 w-0.5 bg-gradient-to-b from-medicore-primary/50 to-transparent" />
+                  <div className="absolute left-3.5 top-2 bottom-2 w-0.5 bg-gradient-to-b from-mediBuddy-primary/50 to-transparent" />
                   <div className="space-y-5">
                     {visibleTimeline.length > 0 ? (
                       visibleTimeline.map((item, index) => (
                         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.08 }} key={index} className="relative pl-10">
-                          <div className={`absolute left-0 top-1.5 w-7 h-7 rounded-full border-[3px] border-[#1e293b] flex items-center justify-center ${item.status === 'done' ? 'bg-medicore-primary' : 'bg-yellow-400'}`}>
+                          <div className={`absolute left-0 top-1.5 w-7 h-7 rounded-full border-[3px] border-[#1e293b] flex items-center justify-center ${item.status === 'done' ? 'bg-mediBuddy-primary' : 'bg-yellow-400'}`}>
                             {item.status === 'done' ? <CheckCircle className="w-3 h-3 text-[#1e293b]" /> : <Clock className="w-3 h-3 text-[#1e293b]" />}
                           </div>
                           <div className="bg-white/5 border border-white/10 rounded-xl p-4 hover:bg-white/10 transition-colors">
@@ -880,7 +880,7 @@ export default function Patients() {
                             </div>
                             <p className="text-sm text-text-secondary">{item.description}</p>
                             <div className="mt-3 inline-flex">
-                              <span className={`text-xs px-2.5 py-1 rounded-md font-medium border ${item.status === 'done' ? 'bg-medicore-primary/20 text-medicore-primary border-medicore-primary/20' : 'bg-yellow-400/20 text-yellow-400 border-yellow-400/20'}`}>
+                              <span className={`text-xs px-2.5 py-1 rounded-md font-medium border ${item.status === 'done' ? 'bg-mediBuddy-primary/20 text-mediBuddy-primary border-mediBuddy-primary/20' : 'bg-yellow-400/20 text-yellow-400 border-yellow-400/20'}`}>
                                 {item.status === 'done' ? 'Completed' : 'Pending'}
                               </span>
                             </div>

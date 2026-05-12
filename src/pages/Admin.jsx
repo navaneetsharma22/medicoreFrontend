@@ -38,15 +38,15 @@ export default function Admin() {
       <motion.div 
         initial={{ y: -20, opacity: 0 }} 
         animate={{ y: 0, opacity: 1 }}
-        className="glass-card rounded-3xl p-8 bg-gradient-to-r from-medicore-primary/20 to-transparent border-medicore-primary/30"
+        className="glass-card rounded-3xl p-8 bg-gradient-to-r from-mediBuddy-primary/20 to-transparent border-mediBuddy-primary/30"
       >
         <div className="flex items-center gap-6">
-          <div className="p-4 bg-medicore-primary rounded-2xl shadow-[0_0_30px_rgba(47,158,143,0.5)]">
+          <div className="p-4 bg-mediBuddy-primary rounded-2xl shadow-[0_0_30px_rgba(47,158,143,0.5)]">
             <Shield className="w-10 h-10 text-white" />
           </div>
           <div>
             <h1 className="text-3xl font-extrabold text-white mb-2">System Administration</h1>
-            <p className="text-text-secondary">Comprehensive control center for MediCore infrastructure and personnel management.</p>
+            <p className="text-text-secondary">Comprehensive control center for mediBuddy infrastructure and personnel management.</p>
           </div>
         </div>
       </motion.div>
@@ -54,7 +54,7 @@ export default function Admin() {
       {/* Admin Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
         {[
-          { label: 'Total Personnel', value: stats.doctors, icon: Users, color: 'text-medicore-primary' },
+          { label: 'Total Personnel', value: stats.doctors, icon: Users, color: 'text-mediBuddy-primary' },
           { label: 'Total Patients', value: stats.patients, icon: UserPlus, color: 'text-blue-400' },
           { label: 'System Uptime', value: '99.98%', icon: Server, color: 'text-green-400' },
           { label: 'Database Status', value: stats.systemHealth, icon: Database, color: 'text-purple-400' },
@@ -98,7 +98,7 @@ export default function Admin() {
              ].map((opt) => (
                <button key={opt.title} className="p-6 bg-white/5 border border-white/10 rounded-2xl text-left hover:bg-white/10 transition-all group">
                   <div className="flex items-center gap-4 mb-3">
-                     <div className="p-2.5 bg-medicore-primary/10 rounded-xl text-medicore-primary group-hover:scale-110 transition-transform">
+                     <div className="p-2.5 bg-mediBuddy-primary/10 rounded-xl text-mediBuddy-primary group-hover:scale-110 transition-transform">
                         <opt.icon className="w-5 h-5" />
                      </div>
                      <h4 className="text-white font-bold">{opt.title}</h4>

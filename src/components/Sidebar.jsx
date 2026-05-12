@@ -59,7 +59,7 @@ export default function Sidebar() {
         </div>
         {!sidebarCollapsed && (
           <motion.h1 initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-2xl font-bold tracking-tight text-white dark:text-text-primary">
-            MediCore
+            mediBuddy
           </motion.h1>
         )}
         <button onClick={() => setSidebarOpen(false)} className="lg:hidden ml-auto p-2 hover:bg-white/10 rounded-lg">
@@ -88,8 +88,8 @@ export default function Sidebar() {
                       sidebarCollapsed ? 'justify-center p-3' : 'px-4 py-2.5'
                     } ${
                       isActive 
-                        ? 'bg-medicore-primary/80 dark:bg-medicore-primary-hover shadow-[0_0_20px_rgba(47,158,143,0.3)] dark:shadow-none text-white dark:text-[#3DB6A3]' 
-                        : 'hover:bg-white/10 dark:hover:bg-medicore-primary/5 text-white/60 dark:text-text-secondary hover:text-white dark:hover:text-text-primary'
+                        ? 'bg-mediBuddy-primary/80 dark:bg-mediBuddy-primary-hover shadow-[0_0_20px_rgba(47,158,143,0.3)] dark:shadow-none text-white dark:text-[#3DB6A3]' 
+                        : 'hover:bg-white/10 dark:hover:bg-mediBuddy-primary/5 text-white/60 dark:text-text-secondary hover:text-white dark:hover:text-text-primary'
                     }`}
                     title={sidebarCollapsed ? item.label : ''}
                   >
@@ -103,7 +103,7 @@ export default function Sidebar() {
                         )}
                         
                         {!sidebarCollapsed && item.badge && (
-                          <span className="ml-auto bg-medicore-primary dark:bg-[#3DB6A3] text-white dark:text-medicore-bg text-[10px] font-bold px-2 py-0.5 rounded-full shadow-lg">
+                          <span className="ml-auto bg-mediBuddy-primary dark:bg-[#3DB6A3] text-white dark:text-mediBuddy-bg text-[10px] font-bold px-2 py-0.5 rounded-full shadow-lg">
                             {item.badge}
                           </span>
                         )}

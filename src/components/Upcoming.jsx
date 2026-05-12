@@ -12,15 +12,15 @@ export default function Upcoming({ data: schedule }) {
     >
       <div className="flex justify-between items-center mb-5">
         <h3 className="font-bold text-text-primary tracking-tight">Today's Schedule</h3>
-        <button className="text-sm text-medicore-primary font-medium hover:underline">View All</button>
+        <button className="text-sm text-mediBuddy-primary font-medium hover:underline">View All</button>
       </div>
 
       <div className="space-y-4">
         {schedule.map((item) => (
-          <div key={item.id} className="group relative p-4 bg-[var(--card)] border border-[var(--border-subtle)] rounded-xl hover:border-medicore-primary/50 transition-all cursor-pointer">
+          <div key={item.id} className="group relative p-4 bg-[var(--card)] border border-[var(--border-subtle)] rounded-xl hover:border-mediBuddy-primary/50 transition-all cursor-pointer">
             <div className="flex justify-between items-start mb-2">
               <h4 className="font-semibold text-text-primary">{item.patient}</h4>
-              <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[var(--surface)] text-xs font-semibold text-medicore-primary shadow-sm">
+              <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[var(--surface)] text-xs font-semibold text-mediBuddy-primary shadow-sm">
                 <Clock className="w-3 h-3" />
                 {item.time}
               </div>
