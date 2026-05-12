@@ -43,30 +43,43 @@
 
 @layer base {
   :root {
-    --bg: #EAF3F1;
-    --surface: #F5F9F8;
-    --card: rgba(255, 255, 255, 0.6);
+    --bg: #F0F7F5;
+    --surface: #E2EFEA;
+    --card: rgba(255, 255, 255, 0.7);
     --text-primary: #1e293b;
     --text-secondary: #475569;
-    --border-subtle: rgba(255, 255, 255, 0.5);
+    --border-subtle: rgba(255, 255, 255, 0.6);
     font-size: 80%;
   }
 
   .dark {
-    --bg: #0F1E1B;
-    --surface: #132724;
-    --card: rgba(26, 52, 48, 0.7);
+    --bg: #0A1A17;
+    --surface: #0D241F;
+    --card: rgba(26, 52, 48, 0.6);
     --text-primary: #E6F4F1;
-    --text-secondary: #A0CFC6;
-    --border-subtle: rgba(255, 255, 255, 0.08);
+    --text-secondary: #8DB3AD;
+    --border-subtle: rgba(255, 255, 255, 0.05);
   }
 
   body {
-    @apply bg-mediBuddy-bg text-text-primary font-sans antialiased overflow-x-hidden transition-colors duration-500 relative;
+    @apply bg-mediBuddy-bg text-text-primary font-sans antialiased overflow-x-hidden transition-colors duration-500 relative min-h-screen;
     font-family: 'Inter', sans-serif;
   }
 
-  /* Animated background gradient based on bg variable. */
+  /* Premium Mesh Gradient Background */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: -2;
+    background: 
+      radial-gradient(at 0% 0%, rgba(47, 158, 143, 0.15) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, rgba(61, 182, 163, 0.1) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, rgba(47, 158, 143, 0.15) 0px, transparent 50%),
+      radial-gradient(at 0% 100%, rgba(31, 122, 107, 0.1) 0px, transparent 50%);
+    opacity: 0.6;
+  }
+
   body::after {
     content: '';
     position: fixed;
@@ -75,7 +88,6 @@
     background: linear-gradient(-45deg, var(--bg), var(--surface), var(--bg), var(--surface));
     background-size: 400% 400%;
     animation: gradientBG 15s ease infinite;
-    opacity: 0.8;
   }
 }
 
