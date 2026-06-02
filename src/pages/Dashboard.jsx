@@ -14,6 +14,10 @@ import CalendarWidget from '../components/Calendar';
 import Upcoming from '../components/Upcoming';
 import ActivityFeed from '../components/Activity';
 import TelehealthModal from '../components/TelehealthModal';
+import PrescriptionModal from '../components/PrescriptionModal';
+import TaskModal from '../components/TaskModal';
+import AddPatientModal from '../components/patients/AddPatientModal';
+import AppointmentModal from '../components/patients/AppointmentModal';
 import { fetchDashboardData } from '../services/api';
 import { generateDailyBriefing, prioritizeActivity } from '../services/intelligence';
 import { SkeletonWrapper, StatCardSkeleton, ChartSkeleton, ListSkeleton } from '../components/SkeletonLoader';
@@ -26,21 +30,25 @@ const AIBriefing = ({ data }) => {
     <motion.div 
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="glass-card p-6 bg-gradient-to-r from-mediBuddy-primary/20 via-mediBuddy-primary/10 to-transparent border-l-4 border-mediBuddy-primary mb-8 overflow-hidden relative group"
+      className="glass-card p-5 md:p-7 bg-gradient-to-r from-mediBuddy-primary/20 via-mediBuddy-primary/5 to-transparent border-l-4 border-mediBuddy-primary mb-10 overflow-hidden relative group min-h-[100px] flex items-center"
     >
-      <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-        <Sparkles className="w-24 h-24 text-mediBuddy-primary" />
+      <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity pointer-events-none">
+        <Sparkles className="w-32 h-32 text-mediBuddy-primary" />
       </div>
-      <div className="flex items-center gap-4 relative z-10">
-        <div className="p-3 bg-mediBuddy-primary rounded-2xl shadow-lg shadow-mediBuddy-primary/30">
-          <Sparkles className="w-6 h-6 text-white" />
+      <div className="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-6 relative z-10 w-full">
+        <div className="p-4 bg-mediBuddy-primary rounded-2xl shadow-xl shadow-mediBuddy-primary/20 flex-shrink-0">
+          <Sparkles className="w-7 h-7 text-white animate-pulse" />
         </div>
-        <div>
-          <h3 className="text-xl font-bold text-white mb-1 flex items-center gap-2">
-            AI Daily Briefing
-            <span className="text-[10px] bg-white/10 px-2 py-0.5 rounded-full uppercase tracking-widest">Beta</span>
-          </h3>
-          <p className="text-text-secondary font-medium">
+        <div className="flex-1">
+          <div className="flex items-center gap-3 mb-1.5">
+            <h3 className="text-xl font-bold text-white tracking-tight">
+              AI Daily Briefing
+            </h3>
+            <span className="text-[10px] bg-mediBuddy-primary/20 text-mediBuddy-primary px-2.5 py-1 rounded-full uppercase tracking-widest font-bold border border-mediBuddy-primary/20">
+              Beta Intelligence
+            </span>
+          </div>
+          <p className="text-text-secondary font-medium leading-relaxed max-w-4xl">
             {briefing}
           </p>
         </div>
@@ -49,13 +57,13 @@ const AIBriefing = ({ data }) => {
   );
 };
 
-const QuickActions = ({ onTelehealthClick }) => (
+const QuickActions = ({ onTelehealthClick, onAddPatientClick, onPrescriptionClick, onAddTaskClick }) => (
   <div className="grid grid-cols-2 gap-4">
     {[
-      { label: 'New Patient', icon: Plus, color: 'bg-mediBuddy-primary' },
-      { label: 'Prescription', icon: Zap, color: 'bg-blue-500' },
+      { label: 'New Patient', icon: Plus, color: 'bg-mediBuddy-primary', onClick: onAddPatientClick },
+      { label: 'Prescription', icon: Zap, color: 'bg-blue-500', onClick: onPrescriptionClick },
       { label: 'Telehealth', icon: Activity, color: 'bg-purple-500', onClick: onTelehealthClick },
-      { label: 'Add Task', icon: Clock, color: 'bg-amber-500' },
+      { label: 'Add Task', icon: Clock, color: 'bg-amber-500', onClick: onAddTaskClick },
     ].map((action, i) => (
       <motion.button
         key={action.label}
@@ -113,9 +121,13 @@ export default function Dashboard() {
   });
 
   const [showTelehealth, setShowTelehealth] = React.useState(false);
+  const [showAddPatientModal, setShowAddPatientModal] = React.useState(false);
+  const [showAppointmentModal, setShowAppointmentModal] = React.useState(false);
+  const [showPrescriptionModal, setShowPrescriptionModal] = React.useState(false);
+  const [showTaskModal, setShowTaskModal] = React.useState(false);
 
   const handleNewAppointment = () => {
-    alert("Opening 'New Appointment' Modal...");
+    setShowAppointmentModal(true);
   };
 
   if (isLoading) return (
@@ -154,7 +166,7 @@ export default function Dashboard() {
   );
 
   return (
-    <div className="max-w-[1400px] mx-auto h-full flex flex-col">
+    <div className="max-w-[1400px] mx-auto min-h-screen flex flex-col p-4 md:p-8">
       <Header />
       
       {/* Zone A: The Pulse (Top) */}
@@ -233,7 +245,12 @@ export default function Dashboard() {
 
           <section className="space-y-4">
             <h3 className="text-sm font-bold text-text-secondary uppercase tracking-widest px-2">Quick Actions</h3>
-            <QuickActions onTelehealthClick={() => setShowTelehealth(true)} />
+            <QuickActions 
+              onTelehealthClick={() => setShowTelehealth(true)} 
+              onAddPatientClick={() => setShowAddPatientModal(true)}
+              onPrescriptionClick={() => setShowPrescriptionModal(true)}
+              onAddTaskClick={() => setShowTaskModal(true)}
+            />
           </section>
 
           <section className="space-y-4">
@@ -248,15 +265,33 @@ export default function Dashboard() {
       </div>
     </div>
 
-    <AnimatePresence>
-      {showTelehealth && (
-        <TelehealthModal 
-          onClose={() => setShowTelehealth(false)} 
-        />
-      )}
-    </AnimatePresence>
-  </div>
+      <AnimatePresence>
+        {showTelehealth && (
+          <TelehealthModal 
+            onClose={() => setShowTelehealth(false)} 
+          />
+        )}
+        {showAddPatientModal && (
+          <AddPatientModal 
+            onClose={() => setShowAddPatientModal(false)} 
+          />
+        )}
+        {showAppointmentModal && (
+          <AppointmentModal 
+            onClose={() => setShowAppointmentModal(false)} 
+          />
+        )}
+        {showPrescriptionModal && (
+          <PrescriptionModal 
+            onClose={() => setShowPrescriptionModal(false)} 
+          />
+        )}
+        {showTaskModal && (
+          <TaskModal 
+            onClose={() => setShowTaskModal(false)} 
+          />
+        )}
+      </AnimatePresence>
+    </div>
   );
 }
-
-
